@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Search For Activities{% endblock %}
+
+{% block body %}
+<form action="/search" method="get">
+  <label for="activity-search">Search by city:</label>
+  <input type="search" id="activity-search" name="activity-search">
+  <button>Search</button>
+</form>
+{% endblock %}
