@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}See the new itinerary{% endblock %}
+
+{% block body %}
+<h1>Your new trip:</h1>
+
+<p>
+    {{ trip.itin_name }} |
+    {{ trip.itin_location }} |
+    {{ trip.itin_start }} |
+    {{ trip.itin_end }}
+    <button class="edit-itinerary" id={{ trip.itin_name }}>Edit trip info </button>
+    <button class="add-activities" id={{trip.itin_name}}>Add activities to this trip</button>
+</p>
+
+{% endblock %}

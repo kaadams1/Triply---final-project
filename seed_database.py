@@ -18,14 +18,9 @@ model.db.create_all()
 with open("data/yelp.json") as f:
     activity_data = json.loads(f.read())
 
-# Create movies, store them in list so we can use them
-# to create fake ratings
 activities_in_db = []
 for activity in activity_data:
-    activity_name = (
-        activity["activity_name"],
-    )
-    # release_date = datetime.strptime(movie["release_date"], "%Y-%m-%d")
+    activity_name = (activity["activity_name"])
 
     db_activity = model.Activity.create(activity_name)
     activities_in_db.append(db_activity)
@@ -33,19 +28,14 @@ for activity in activity_data:
 model.db.session.add_all(activities_in_db)
 model.db.session.commit()
 
-# Create 10 users; each user will make 10 ratings
+# Create 10 users
 for n in range(10):
     email = f"user{n}@test.com"
     password = "test"
+    user_fname = "User"
+    user_lname = "Test"
 
-    user = model.User.create(email, password)
+    user = model.User.create(email, password, user_fname, user_lname)
     model.db.session.add(user)
-
-    # for _ in range(10):
-    #     random_movie = choice(movies_in_db)
-    #     score = randint(1, 5)
-
-    #     rating = model.Rating.create(user, random_movie, score)
-    #     model.db.session.add(rating)
 
 model.db.session.commit()

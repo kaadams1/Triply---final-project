@@ -20,19 +20,19 @@ class User(db.Model):
     def __repr__(self):
         return f"<User user_id={self.user_id} email={self.email}>"
 
-    # @classmethod
-    # def create(cls, user_fname, user_lname, email, password):
-    #    """Create and return a new user."""
+    @classmethod
+    def create(cls, user_fname, user_lname, email, password):
+       """Create and return a new user."""
 
-    #    return cls(email=email, password=password)
+       return cls(user_fname=user_fname, user_lname=user_lname, email=email, password=password)
 
-    # @classmethod
-    # def get_by_id(cls, user_id):
-    #     return cls.query.get(user_id)
+    @classmethod
+    def get_by_id(cls, user_id):
+        return cls.query.get(user_id)
 
-    # @classmethod
-    # def get_by_email(cls, email):
-    #     return cls.query.filter(User.email == email).first()
+    @classmethod
+    def get_by_email(cls, email):
+        return cls.query.filter(User.email == email).first()
 
     # @classmethod
     # def all_users(cls):
@@ -53,21 +53,50 @@ class Itinerary(db.Model):
 
     user = db.relationship("User", backref="itineraries")    
     destinations = db.relationship("Destination", backref="itinerary") #many to one
-    #backref to scheduled activities
+    #backref to scheduled activities - attribute for free
+    activities = db.relationship("Activity", secondary="scheduledactivities", backref="itineraries")
+
+    @classmethod
+    def create(cls, user_id, itin_name, itin_location, itin_start, itin_end):
+       """Create and return a new itinerary."""
+       return cls(user_id=user_id, itin_name=itin_name, itin_location=itin_location, itin_start=itin_start, itin_end=itin_end)
+
+    @classmethod
+    def check_for_trip(cls, user_id=User.user_id, itin_location=itin_location, itin_start=itin_start):
+        """Check to see if user has already created this trip. Returns boolean."""
+        check_trip = Itinerary.query.filter_by(user_id=User.user_id, itin_location=itin_location, itin_start=itin_start).first()
+        return check_trip
+
+    @classmethod
+    def return_itineraries(cls, user_id=User.user_id, itin_name=itin_name, itin_location=itin_location, itin_start=itin_start, itin_end=itin_end):
+        """Return a list of all itineraries by the same user."""
+        get_itins = Itinerary.query.filter_by(user_id=User.user_id).all()
+        return get_itins
+
+    @classmethod
+    def get_by_id(cls, itin_id):
+        """Return and view a single itinerary."""
+        grab_itin = Itinerary.query.get(itin_id)
+        return grab_itin
+
+    @classmethod
+    def update(cls, itin_id, updated_name = None, updated_location = None, updated_start = None, updated_end = None):
+       """Update and return a new itinerary."""
+       trip = cls.query.get(itin_id)
+
+       if updated_name:
+            trip.itin_name = updated_name
+       if updated_location:
+            trip.itin_location = updated_location
+       if updated_start:
+            trip.itin_start = updated_start
+       if updated_end:
+            trip.itin_end = updated_end
+
 
     def __repr__(self):
         return f"<Itinerary itin_id={self.itin_id} itin_name={self.itin_name}>"
 
-    # @classmethod
-    # def create(cls, itin_name, itin_location, itin_start, itin_end):
-    #     """Create and return a new itinerary."""
-
-    #     return cls(
-    #         itin_name=itin_name,
-    #         itin_location=itin_location,
-    #         itin_start=itin_start,
-    #         itin_end=itin_end,
-    #         )
 
 
 class Activity(db.Model):
@@ -76,30 +105,23 @@ class Activity(db.Model):
     __tablename__ = "activities"
 
     activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    activity_name = db.Column(db.String(30), nullable=False, unique=False)
+    activity_name = db.Column(db.String, nullable=False, unique=False)
     city_id = db.Column(db.Integer, db.ForeignKey("cities.city_id"))
-    activity_date = db.Column(db.Date, nullable=True, unique=False)
-    activity_pic = db.Column(db.String)
 
     city = db.relationship("City", backref="activities")
     scheduledactivities = db.relationship("SchedActivity", backref="activity")
+    #secondary relationship to itinerary
 
-    # def connect_to_db(app, db_uri="postgresql:///testdb"):
-    #     app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-    #     db.app = app
-    #     db.init_app(app)
+    @classmethod
+    def create(cls, activity_name, city_id):
+       """Create and return a new activity."""
+       return cls(activity_name=activity_name, city_id=city_id)
 
-    # def example_data():
-    #     """Create example data for the test database."""
-    #     # write a function that creates a game and adds it to the database.
-    #     Activity.query.delete()
-
-    #     ex1 = Activity(activity_name='London Bridge')
-    #     ex2 = Activity(activity_name='The Forbidden Forest')
-    #     ex3 = Activity(activity_name='Sesame Street')
-
-    #     db.session.add_all([ex1, ex2, ex3])
-    #     db.session.commit()
+    @classmethod
+    def get_by_id(cls, activity_id):
+        """Return and view a single activity."""
+        grab_activity = Activity.query.get(activity_id)
+        return grab_activity
 
 
     def __repr__(self):
@@ -115,10 +137,21 @@ class SchedActivity(db.Model):
     sched_act_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     activity_id = db.Column(db.Integer, db.ForeignKey("activities.activity_id"))
     itin_id = db.Column(db.Integer, db.ForeignKey("itineraries.itin_id"))
-    sched_act_date = db.Column(db.Date, nullable=True, unique=False)
+    sched_act_date = db.Column(db.DateTime, nullable=True, unique=False)
 
     # activity = db.relationship("Activity", backref="scheduledactivities") - attribute for free
     itinerary = db.relationship("Itinerary", backref="scheduledactivities")
+
+    @classmethod
+    def create(cls, activity_id, itin_id, sched_act_date):
+       """Create and return a new scheduled activity."""
+       return cls(activity_id=activity_id, itin_id=itin_id, sched_act_date=sched_act_date)
+
+    @classmethod
+    def get_by_id(cls, sched_act_id):
+        """Return and view a single scheduled activity."""
+        grab_sched_act = SchedActivity.query.get(sched_act_id)
+        return grab_sched_act
 
     def __repr__(self):
         return f"<Scheduled activity sched_act_id={self.sched_act_id} activity_id={self.activity_id} itin_id={self.itin_id}>"
@@ -132,10 +165,27 @@ class City(db.Model):
 
     city_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     city_name = db.Column(db.String(25), nullable=False, unique=False)
-    country_name = db.Column(db.String(25), nullable=False, unique=False)
+    # country_name = db.Column(db.String(25), nullable=False, unique=False)
 
     # activities = db.relationship("Activity", backref="city") - attibute for free
     destinations = db.relationship("Destination", backref="city")
+
+    @classmethod
+    def create(cls, city_name):
+       """Create and add city to the database."""
+       return cls(city_name=city_name)
+
+    @classmethod
+    def get_by_id(cls, city_id):
+        """Return and view a single city object."""
+        grab_city_by_id = City.query.get(city_id)
+        return grab_city_by_id
+
+    @classmethod
+    def get_by_name(cls, city_name):
+        grab_city_by_name = City.query.filter_by(city_name=city_name).first()
+        return grab_city_by_name
+
 
     def __repr__(self):
         return f"<City city_id={self.city_id} city_name={self.city_name}>"
@@ -154,6 +204,29 @@ class Destination(db.Model):
     # city = db.relationship("City", backref="destinations") - attribute for free
     # itinerary = db.relationship("Itinerary", backref="destinations") - attribute for free
 
+    @classmethod
+    def create(cls, city_id, itin_id):
+        """Create a destination object to put in the database."""
+        return cls(city_id=city_id, itin_id=itin_id)
+
+    @classmethod
+    def get_by_id(cls, dest_id):
+        """Retrieve destination object using dest_id."""
+        grab_dest_by_id = Destination.query.get(dest_id)
+        return grab_dest_by_id
+
+    @classmethod
+    def get_by_itin_id(cls, itin_id):
+        """Retrieve destination object using itin_id."""
+        grab_dest_by_itin_id = Destination.query.filter_by(itin_id=itin_id).first()
+        return grab_dest_by_itin_id
+
+    @classmethod
+    def get_by_city_id(cls, city_id):
+        """Retrieve destination object using city_id."""
+        grab_dest_by_city_id = Destination.query.filter_by(city_id=city_id).first()
+        return grab_dest_by_city_id
+
     def __repr__(self):
         return f"<Destination dest_id={self.dest_id} city_id={self.city_id} itin_id={self.itin_id}>"
 
@@ -167,6 +240,7 @@ def connect_to_db(flask_app, db_uri="postgresql:///activities", echo=True):
     db.app = flask_app
     db.init_app(flask_app)
 
+    print("Connected to the db!")
 
 
 if __name__ == "__main__":
@@ -176,4 +250,5 @@ if __name__ == "__main__":
     # too annoying; this will tell SQLAlchemy not to print out every
     # query it executes.
 
-    # connect_to_db(app)
+    connect_to_db(app)
+    db.create_all()

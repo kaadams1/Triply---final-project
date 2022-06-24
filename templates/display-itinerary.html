@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}View a single itinerary{% endblock %}
+
+{% block body %}
+<h1>Your itinerary:</h1>
+
+<p>
+    {{ trip.itin_name }} |
+    {{ trip.itin_location }} |
+    {{ trip.itin_start }} |
+    {{ trip.itin_end }}
+    <form method="get" action="/edit-itinerary/{{trip.itin_id}}">
+        <button type="submit">Edit trip info</button>
+    </form>
+    <form method="get" action="/search/{{trip.itin_id}}">
+        <button type="submit">Add activities to this trip</button>
+    </form>
+</p>
+
+<p>
+
+    <h2>Activities list:</h2>
+
+    <p>
+        {% if trip.activities %}
+            {% for scheduledactivity in trip.scheduledactivities %}
+                {% if scheduledactivity.sched_act_date is undefined %}
+                    <li>
+                        {{ scheduledactivity.activity.activity_name }}
+
+                        <form method="get" action="/schedule-activity/{{trip.itin_id}}/{{scheduledactivity.activity_id}}">
+                            <!-- could include hidden input instead-->
+                            <input type="datetime-local" name="date">
+                            <button name="schedule" id="schedule" type="submit">Add to schedule</button>
+                        </form>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </p>
+
+    <h2>Your scheduled activities:</h2>
+
+    <p>
+            {% if trip.scheduledactivities %}
+                {% for scheduledactivity in trip.scheduledactivities %}
+                    {% if scheduledactivity.sched_act_date %}
+                        <li>
+                            {{ scheduledactivity.activity.activity_name }} | 
+                            {{ scheduledactivity.sched_act_date }}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+    </p>
+    
+
+</p>
+
+{% endblock %}

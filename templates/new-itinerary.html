@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Create a new itinerary{% endblock %}
+
+{% block body %}
+
+<h1>Create a new itinerary:</h1>
+
+<p>
+<form action="/new-itinerary" method="POST">
+    <label for="itin_name">Name your trip!</label>
+    <input type="text" id="itin_name" name="itin_name"><br><br>
+
+    <label for="itin_location">What city are you visiting?</label>
+    <input type="text" id="itin_location" name="itin_location"><br><br>
+
+    <label for="itin_start">Trip start date:</label>
+    <input type="text" id="itin_start" name="itin_start"><br><br>
+
+    <label for="itin_end">Trip end date:</label>
+    <input type="text" id="itin_end" name="itin_end"><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+</p>
+
+{% endblock %}

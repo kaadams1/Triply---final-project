@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit your itinerary{% endblock %}
+
+{% block body %}
+<h1>Edit your itinerary:</h1>
+
+
+
+    <p>
+        <p>
+        <span id="name">
+        {{ trip.itin_name }} </span> | <button class="edit-itin-name" id={{trip.itin_id}}>Edit name</button>
+        </p>
+        <p>
+        <span id="location">
+        {{ trip.itin_location }} </span> | <button class="edit-itin-location" id={{trip.itin_location}}>Edit location</button>
+        </p>
+        <p>
+        <span id="start">
+        {{ trip.itin_start }} </span> | <button class="edit-itin-start" id={{trip.itin_start}}>Edit start date</button>
+        </p>
+        <p>
+        <span id="end">
+        {{ trip.itin_end }} </span> | <button class="edit-itin-end" id={{trip.itin_end}}>Edit end date</button>
+        </p>
+        
+        <form method="get" action="/display-itinerary/{{trip.itin_id}}">
+            <button type="submit">Save changes</button>
+        </form>
+        <form method="get" action="/display-itinerary/{{trip.itin_id}}">
+            <button type="submit">Cancel</button>
+        </form>
+
+    </p>
+
+
+<script src="/static/js/updateItinerary.js"></script>
+
+{% endblock %}
