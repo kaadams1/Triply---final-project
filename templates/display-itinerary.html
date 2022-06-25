@@ -25,7 +25,7 @@
     <p>
         {% if trip.activities %}
             {% for scheduledactivity in trip.scheduledactivities %}
-                {% if scheduledactivity.sched_act_date is undefined %}
+                {% if scheduledactivity.sched_act_date is none %}
                     <li>
                         {{ scheduledactivity.activity.activity_name }}
 

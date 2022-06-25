@@ -275,6 +275,8 @@ def schedule_activity(itin_id, activity_id):
     sched_act_date = request.args.get('date')
 
     scheduledactivity = SchedActivity.create(activity_id, itin_id, sched_act_date)
+    #instead of creating, check to see if in database
+    #if it is, update the date; if not, create
 
     trip.scheduledactivities.append(scheduledactivity)
 
