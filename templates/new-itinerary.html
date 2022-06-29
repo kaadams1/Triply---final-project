@@ -8,19 +8,54 @@
 
 <p>
 <form action="/new-itinerary" method="POST">
-    <label for="itin_name">Name your trip!</label>
-    <input type="text" id="itin_name" name="itin_name"><br><br>
 
-    <label for="itin_location">What city are you visiting?</label>
-    <input type="text" id="itin_location" name="itin_location"><br><br>
+    <div class="form-group" name="itin_name">
+        {% set class = 'form-control is-invalid' if form.itin_name.errors else 'form-control' %}
+        {{ form.itin_name.label }}
+        {{ form.itin_name(class=class) }}
+        {% if form.itin_name.errors %}
+        <div class="invalid-feedback">
+            {{ form.itin_name.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
 
-    <label for="itin_start">Trip start date:</label>
-    <input type="text" id="itin_start" name="itin_start"><br><br>
+    <div class="form-group" name="itin_location">
+        {% set class = 'form-control is-invalid' if form.itin_location.errors else 'form-control' %}
+        {{ form.itin_location.label }}
+        {{ form.itin_location(class=class) }}
+        {% if form.itin_location.errors %}
+        <div class="invalid-feedback">
+            {{ form.itin_location.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
 
-    <label for="itin_end">Trip end date:</label>
-    <input type="text" id="itin_end" name="itin_end"><br><br>
+    <div class="form-group" name="itin_start">
+        {% set class = 'form-control is-invalid' if form.itin_start.errors else 'form-control' %}
+        {{ form.itin_start.label }}
+        {{ form.itin_start(class=class) }}
+        {% if form.itin_start.errors %}
+        <div class="invalid-feedback">
+            {{ form.itin_start.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
 
-    <input type="submit" value="Submit">
+    <div class="form-group" name="itin_end">
+        {% set class = 'form-control is-invalid' if form.itin_end.errors else 'form-control' %}
+        {{ form.itin_end.label }}
+        {{ form.itin_end(class=class) }}
+        {% if form.itin_end.errors %}
+        <div class="invalid-feedback">
+            {{ form.itin_end.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <input class="btn btn-primary" id="create_itin" name="create_itin" type="submit" value="Create itinerary">
+      </div>  
 </form>
 </p>
 

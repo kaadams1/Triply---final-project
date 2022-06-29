@@ -3,10 +3,11 @@ from pprint import pformat
 import os
 import requests
 from flask import Flask, render_template, request, flash, session, redirect
-
+from forms import RegistrationForm, GreetUserForm, SearchActivities, NewItinerary
 from model import connect_to_db, db, User, Activity, SchedActivity, City, Destination, Itinerary
-
 from jinja2 import StrictUndefined
+import pandas as pd
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "noguessinggames4653"
@@ -15,35 +16,50 @@ app.jinja_env.undefined = StrictUndefined
 API_KEY = os.environ['YELP_KEY']
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def homepage():
     """View homepage."""
 
-    return render_template("homepage.html")
+    form = RegistrationForm()
+
+    return render_template("homepage.html", form=form)
 
 #USERS
 
-@app.route("/users", methods=["POST"])
+@app.route("/users", methods=["GET", "POST"])
 def register_user():
     """Create a new user."""
 
-    user_fname = request.form.get("first_name")
-    user_lname = request.form.get("last_name")
-    email = request.form.get("email")
-    password = request.form.get("password")
+    form = RegistrationForm()
 
-    user = User.get_by_email(email)
+    if request.method == "POST":
+        
+        if form.validate_on_submit():
 
-    if user:
-        flash("Cannot create an account with that email. Try again.")
+            user_fname = request.form.get("first_name")
+            user_lname = request.form.get("last_name")
+            email = request.form.get("email")
+            password = request.form.get("password")
+            
+            user = User.get_by_email(email)
 
-    else:
-        user = User.create(user_fname, user_lname, email, password)
-        db.session.add(user)
-        db.session.commit()
-        flash("Account created! Please log in.")
+            if user:
+                flash("Email already in use. Try again.")
+
+            else:
+                user = User.create(user_fname, user_lname, email, password)
+                db.session.add(user)
+                db.session.commit()
+                flash("Account created! Please log in.")
+
+        else:
+            if form.password.errors:
+                for error in form.password.errors:
+                    flash(error)
+            # return form.errors
 
     return redirect("/")
+
 
 
 @app.route("/users/<user_id>")
@@ -58,6 +74,8 @@ def show_user(user_id):
 @app.route("/login", methods=["POST"])
 def process_login():
     """Process user login."""
+
+    form = GreetUserForm()
 
     email = request.form.get("email")
     password = request.form.get("password")
@@ -81,12 +99,20 @@ def process_login():
 def display_new_itin_form():
     """Display a form to create new itinerary. Goes with def create_new_itin()."""
 
-    return render_template("new-itinerary.html")
+    form = NewItinerary()
+
+    return render_template("new-itinerary.html", form=form)
 
 
 @app.route("/new-itinerary", methods=["POST"])
 def create_new_itin():
     """Create a new itinerary."""
+
+    form = NewItinerary()
+
+    # if request.method == "POST":
+        
+    #     if form.validate_on_submit():
 
     itin_name = request.form.get("itin_name")
     itin_location = request.form.get("itin_location")
@@ -123,9 +149,16 @@ def create_new_itin():
         db.session.add(destination)
         db.session.commit()
 
-        # destination = Destination.get_by_itin_id(trip.itin_id)
+                # destination = Destination.get_by_itin_id(trip.itin_id)
 
         return redirect(f"/display-itinerary/{trip.itin_id}")
+
+        # else:
+        #     for error in form.errors:
+        #         flash(error)
+
+    # else:
+    #     return redirect('/new-itinerary')
     
 
 @app.route("/display-new-itinerary/<itin_id>")
@@ -145,6 +178,10 @@ def view_itineraries():
 
     itin_list = Itinerary.return_itineraries(user.user_id)
 
+    for itin in itin_list:
+        itin.itin_start = itin.itin_start.strftime('%m-%d-%Y')
+        itin.itin_end = itin.itin_end.strftime('%m-%d-%Y')
+
     return render_template("view-itineraries.html", itin_list=itin_list)
 
 
@@ -153,8 +190,34 @@ def display_itinerary(itin_id):
     """Display a single itinerary from the user's list."""
 
     trip = Itinerary.get_by_id(itin_id)
+    form = NewItinerary()
 
-    return render_template("display-itinerary.html", trip=trip)
+    unscheduled_activities = [s.activity for s in trip.scheduledactivities if not s.sched_act_date]
+
+    print('\n' * 5)
+    print(unscheduled_activities)
+    print('\n' * 5)
+    scheduled_activities = SchedActivity.query.filter(SchedActivity.itin_id==2, SchedActivity.sched_act_date!=None).all()
+    print(scheduled_activities)
+    print('\n' * 5)
+
+    trip.itin_start = trip.itin_start.strftime('%m-%d-%Y')
+    trip.itin_end = trip.itin_end.strftime('%m-%d-%Y')
+    
+    itin_dates = pd.date_range(start=trip.itin_start, end=trip.itin_end)
+    itin_dates2 = []
+    
+    for d in itin_dates:
+        # conv_date = date.strftime('%m-%d-%Y')
+        itin_dates2.append(d.date())
+
+    # for scheduled_activity in scheduled_activities:
+    #     for date in itin_dates2:
+    #         if scheduled_activity.sched_act_date == date:
+    #                 return scheduled_activity.activity.activity_name
+
+    return render_template("display-itinerary.html", trip=trip, form=form, unscheduled_activities=unscheduled_activities, 
+                                scheduled_activities=scheduled_activities, itin_dates2=itin_dates2)
 
 
 @app.route("/edit-itinerary/<itin_id>", methods=["GET"])
@@ -189,10 +252,10 @@ def search_activities(itin_id):
     """Search activities by city or zip."""
 
     trip = Itinerary.get_by_id(itin_id)
+    form = SearchActivities()
+    location = request.args.get('search_location')
 
-    location = request.args.get('location')
-
-    return render_template("search.html", trip=trip, location=location)
+    return render_template("search.html", trip=trip, form=form, location=location)
 
 
 @app.route("/search-results/<itin_id>", methods=["GET"])
@@ -200,22 +263,22 @@ def list_searched_activities(itin_id):
     """List activities from search."""
 
     trip = Itinerary.get_by_id(itin_id)
-
-    location = request.args.get('location')
+    
+    location = request.args.get('search_location')
 
     url = 'https://api.yelp.com/v3/businesses/search'
     payload = { 'location' : location,
-                'radius' : 20000,
+                'radius' : 40000,
                 'term' : 'attractions' }
 
     header = { 'Authorization' : f"Bearer {os.environ['YELP_KEY']}" }
 
     response = requests.get(url, params=payload, headers=header)
-    
+        
     json_response = response.json() 
 
     return render_template('search-results.html', 
-                            trip=trip,
+                            trip=trip, location=location,
                             pformat=pformat,
                             json_response=json_response)
 
@@ -266,23 +329,29 @@ def list_chosen_activities():
     return redirect(f"/display-itinerary/{trip.itin_id}")
 
 
-@app.route("/schedule-activity/<itin_id>/<activity_id>", methods = ["GET"])
+@app.route("/schedule-activity/<itin_id>/<activity_id>", methods = ["POST"])
 def schedule_activity(itin_id, activity_id):
     """Schedule an activity from the activities list, moving to scheduled activities."""
 
     trip = Itinerary.get_by_id(itin_id)
 
-    sched_act_date = request.args.get('date')
+    sched_act_date = request.form.get('date')
 
-    scheduledactivity = SchedActivity.create(activity_id, itin_id, sched_act_date)
+    #get sched activity by activity ID and itin ID
+    sched_activity = SchedActivity.get_by_trip_id_act_id(itin_id, activity_id)
+    #if sched activity:
+    if sched_activity:
+        sched_activity.sched_act_date=sched_act_date
+        #modify/add date
+    else:
+        scheduledactivity = SchedActivity.create(activity_id, itin_id, sched_act_date)
     #instead of creating, check to see if in database
     #if it is, update the date; if not, create
 
-    trip.scheduledactivities.append(scheduledactivity)
-
-    db.session.add(scheduledactivity)
+        trip.scheduledactivities.append(scheduledactivity)
+        db.session.add(scheduledactivity)
+    
     db.session.commit()
-
 
     return redirect(f"/display-itinerary/{trip.itin_id}")
 

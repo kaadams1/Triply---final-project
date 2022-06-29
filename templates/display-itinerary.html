@@ -3,59 +3,106 @@
 {% block title %}View a single itinerary{% endblock %}
 
 {% block body %}
-<h1>Your itinerary:</h1>
 
-<p>
-    {{ trip.itin_name }} |
-    {{ trip.itin_location }} |
-    {{ trip.itin_start }} |
-    {{ trip.itin_end }}
-    <form method="get" action="/edit-itinerary/{{trip.itin_id}}">
-        <button type="submit">Edit trip info</button>
-    </form>
-    <form method="get" action="/search/{{trip.itin_id}}">
-        <button type="submit">Add activities to this trip</button>
-    </form>
-</p>
+<div class="container">
 
-<p>
+    <div class="row">
 
-    <h2>Activities list:</h2>
+        <div class="col">
 
-    <p>
-        {% if trip.activities %}
-            {% for scheduledactivity in trip.scheduledactivities %}
-                {% if scheduledactivity.sched_act_date is none %}
-                    <li>
-                        {{ scheduledactivity.activity.activity_name }}
+        <h1>Your itinerary:</h1>
 
-                        <form method="get" action="/schedule-activity/{{trip.itin_id}}/{{scheduledactivity.activity_id}}">
-                            <!-- could include hidden input instead-->
-                            <input type="datetime-local" name="date">
-                            <button name="schedule" id="schedule" type="submit">Add to schedule</button>
-                        </form>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    </p>
+        <p>
+            {{ trip.itin_name }} <br>
+            {{ trip.itin_location }} <br>
+            {{ trip.itin_start }} to
+            {{ trip.itin_end }} <br>
+            <form method="get" action="/edit-itinerary/{{trip.itin_id}}">
+                <button type="submit">Edit trip info</button>
+            </form> <br>
+            <form method="get" action="/search/{{trip.itin_id}}">
+                <button type="submit">Add activities to this trip</button>
+            </form>
+        </p>
 
-    <h2>Your scheduled activities:</h2>
+        <p>
 
-    <p>
-            {% if trip.scheduledactivities %}
-                {% for scheduledactivity in trip.scheduledactivities %}
-                    {% if scheduledactivity.sched_act_date %}
-                        <li>
-                            {{ scheduledactivity.activity.activity_name }} | 
-                            {{ scheduledactivity.sched_act_date }}
-                        </li>
-                    {% endif %}
+        </div>
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+            <h2>Activities to be scheduled:</h2>
+
+            <p>
+                    {% for unscheduled_activity in unscheduled_activities %}
+                        <ul id="unsched-activity-name">
+                                    <span>{{ unscheduled_activity.activity_name }}</span>
+
+                                    <form method="post" action="/schedule-activity/{{trip.itin_id}}/{{unscheduled_activity.activity_id}}">
+                                        <!-- could include hidden input instead-->
+                                        <input type="datetime-local" name="date">
+                                        <button name="schedule" id="schedule" type="submit">Add to schedule</button>
+
+                                    </form>
+                        </ul>
+                    {% endfor %}
+            </p>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+
+            <h2>Your scheduled activities:</h2>
+
+    </div>
+</div>
+
+            <!-- <p>
+
+                        {% for scheduled_activity in scheduled_activities %}
+                            {{ scheduled_activity.activity.activity_name }}
+                            {{ scheduled_activity.sched_act_date }}
+                        {% endfor %}
+
+            </p> -->
+            
+    <div class="container">
+
+        <div class="row">
+        
+                {% for date in itin_dates2 %}
+
+                <div class="col">
+                    <ul id="sched-date">
+                    {{ date }} <br>
+                    {% for scheduled_activity in scheduled_activities %}
+                        {% if scheduled_activity.sched_act_date.date() == date %}
+                            {{ scheduled_activity.activity.activity_name }}
+                            {{ scheduled_activity.sched_act_date.time() }}
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+
+                    <ul id="sched-activity-name">
+
+                    </ul>
+                </div>
+
+                
                 {% endfor %}
-            {% endif %}
-    </p>
-    
 
-</p>
+        </div>
+    </div>
 
 {% endblock %}

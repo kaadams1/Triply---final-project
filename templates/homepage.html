@@ -1,50 +1,109 @@
 {% extends 'base.html' %}
+
+{% from "_formhelpers.html" import render_field %}
+
 {% block title %}Triply{% endblock %}
 
 {% block body %}
   <h1>Welcome to Triply!</h1>
 
-  <!-- <h2>Navigation</h2> -->
-  <!-- <ul>
-    <li><a href="/movies">View all movies</a></li>
-    <li><a href="/users">View all users</a></li>
-  </ul> -->
+  
 
-  <h2>New to Triply? Create an account:</h2>
-  <form action="/users" method="POST">
-    <p>
-      First name <input type="text" name="first_name">
-    </p>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+
+
+        <h2>New to Triply? Create an account:</h2>
+
+      <form id="register" action="/users" method="POST">
+
+        <div class="form-group" name="first_name">
+          {% set class = 'form-control is-invalid' if form.user_fname.errors else 'form-control' %}
+          {{ form.user_fname.label }}
+          {{ form.user_fname(class=class) }}
+          {% if form.user_fname.errors %}
+          <div class="invalid-feedback">
+              {{ form.user_fname.errors[0] }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="form-group" name="last_name">
+          {% set class = 'form-control is-invalid' if form.user_lname.errors else 'form-control' %}
+          {{ form.user_lname.label }}
+          {{ form.user_lname(class=class) }}
+          {% if form.user_lname.errors %}
+          <div class="invalid-feedback">
+              {{ form.user_lname.error[0] }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="form-group" name="email">
+          {% set class = 'form-control is-invalid' if form.email.errors else 'form-control' %}
+          {{ form.email.label }}
+          {{ form.email(class=class) }}
+          {% if form.email.errors %}
+          <div class="invalid-feedback">
+              {{ form.email.error[0] }}
+          </div>
+          {% endif %}
+        </div>
+        <div class="form-group" name="password">
+            {% set class = 'form-control is-invalid' if form.password.errors else 'form-control' %}
+            <div>{{ form.password.label }} {{ form.password(class=class) }}</div>
+            {% if form.password.errors %}
+                <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+        
+          </div>
+          <div class="form-group" name="confirm">
+            {% set class = 'form-control' %}
+            {{ form.confirm.label }}
+            {{ form.confirm(class=class) }}
+          </div>
+          <div class="form-group">
+            <input class="btn btn-primary" id="signup" name="signup" type="submit" value="Signup">
+          </div>  
+
+      </form>
+
+      </div>
+
+
+      <div class="col">
+        <h2>Already have an account? Log in:</h2>
+
+        <form id = "login" action="/login" method="POST">
+
+          <div class="form-group" name="email">
+            {% set class = 'form-control is-invalid' if form.email.errors else 'form-control' %}
+            {{ form.email.label }}
+            {{ form.email(class=class) }}
+            {% if form.email.errors %}
+            <div class="invalid-feedback">
+                {{ form.email.errors[0] }}
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group" name="password">
+              {% set class = 'form-control is-invalid' if form.password.errors else 'form-control' %}
+              {{ form.password.label }}
+              {{ form.password(class=class) }}
+              {% if form.password.errors %}
+              <div class="invalid-feedback">
+                  {{ form.password.errors[0] }}
+              </div>
+              {% endif %}
+            </div>
+            <div class="form-group">
+              <input class="btn btn-primary" id="login" name="login" type="submit" value="Login">
+            </div>  
+            
+          
+        </form>
+      </div>
     
-    <p>
-      Last name <input type="text" name="last_name">
-    </p>
+    </div>
 
-    <p>
-      Email <input type="text" name="email">
-    </p>
-
-    <p>
-      Password <input type="password" name="password">
-    </p>
-
-    <p>
-      <input type="submit">
-    </p>
-  </form>
-
-  <h2>Already have an account? Log in:</h2>
-  <form action="/login" method="POST">
-    <p>
-      Email <input type="text" name="email">
-    </p>
-
-    <p>
-      Password <input type="password" name="password">
-    </p>
-
-    <p>
-      <input type="submit">
-    </p>
-  </form>
+  </div>
 {% endblock %}

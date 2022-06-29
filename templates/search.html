@@ -15,6 +15,26 @@
 
   <div class="row">
     <form method="GET" action="/search-results/{{trip.itin_id}}">
+
+      <div class="form-group" name="search_location">
+        {% set class = 'form-control is-invalid' if form.search_location.errors else 'form-control' %}
+        {{ form.search_location.label }}
+        {{ form.search_location(class=class) }}
+        {% if form.search_location.errors %}
+        <div class="invalid-feedback">
+            {{ form.search_location.errors[0] }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="form-group">
+      <input class="btn btn-primary" id="search_location" name="search_location" type="submit" value="Submit">
+    </div>  
+
+    </form>
+  </div>
+<!-- 
+  <div class="row">
+    <form method="GET" action="/search-results/{{trip.itin_id}}">
       <button type="submit">Search city or zipcode</button>
     <input
       id="search-location"
@@ -22,6 +42,7 @@
       type="text"
       name="location">
     </form>
-  </div>
-</form>
+  </div> -->
+
+
 {% endblock %}

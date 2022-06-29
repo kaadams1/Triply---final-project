@@ -1,7 +1,9 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
+
 
 
 class User(db.Model):
@@ -110,7 +112,7 @@ class Activity(db.Model):
 
     city = db.relationship("City", backref="activities")
     scheduledactivities = db.relationship("SchedActivity", backref="activity")
-    #secondary relationship to itinerary
+    #secondary relationship to itinerary via backref
 
     @classmethod
     def create(cls, activity_name, city_id):
@@ -122,6 +124,12 @@ class Activity(db.Model):
         """Return and view a single activity."""
         grab_activity = Activity.query.get(activity_id)
         return grab_activity
+
+    @classmethod
+    def get_unsched_activities_by_itin(cls, itin_id):
+        """Return unscheduled activities by itinerary."""
+        grab_unsched_activities = Activity.query.filter_by(itin_id=itin_id).all()
+        return grab_unsched_activities
 
 
     def __repr__(self):
@@ -153,8 +161,16 @@ class SchedActivity(db.Model):
         grab_sched_act = SchedActivity.query.get(sched_act_id)
         return grab_sched_act
 
+    @classmethod
+    def get_by_trip_id_act_id(cls, itin_id, activity_id):
+        get_by_trip_act = SchedActivity.query.filter_by(itin_id=itin_id, activity_id=activity_id).first()
+        return get_by_trip_act
+
+    # @classmethod
+    # def get_sched_act_for_trip
+
     def __repr__(self):
-        return f"<Scheduled activity sched_act_id={self.sched_act_id} activity_id={self.activity_id} itin_id={self.itin_id}>"
+        return f"<Scheduled activity sched_act_id={self.sched_act_id} activity_id={self.activity_id} itin_id={self.itin_id} sched_act_date={self.sched_act_date}>"
 
 
 

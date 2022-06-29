@@ -5,32 +5,40 @@
 {% block body %}
 
   <div class="container">
+
     <div class="row">
-      <div class="col d-flex justify-content-center">
+      <div class="col">
+
+        <div id="activity-search-results">
+          <h2>Stuff to do in {{ location.capitalize() }}</h2>
+
+        <div class="col">
         <a href="/search/{{trip.itin_id}}" class="lead backlink">
           Go back to the search form
         </a>
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
+  </div>
 
-        <div id="activity-search-results">
-          <h2>Activity Search Results</h2>
+  <div class="container">
 
           <ul class="activities-list list-group">
             {% for business in json_response['businesses'] %}
               <li class="list-group-item list-group-item-action">
+
                 <div class="row">
-                  <div class="col-2">
+
+                  <div class="col">
+
                     <img src="{{ business['image_url'] }}">
+                  
                   </div>
 
                   <div class="col">
+
                     <div class="d-flex w-100 justify-content-between">
                       <a href="{{ business['url'] }}" target="_blank">
-
                         <h5>{{ business['name'] }}</h5>
 
                         <form method="GET" action="/add-activity">
@@ -39,6 +47,7 @@
                         <button id="add-activity" type="submit">Add to itinerary</button></form>
                       </a>
                     </div>
+                    
                   </div>
                 </div>
               </li>

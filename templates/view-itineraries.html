@@ -3,19 +3,32 @@
 {% block title %}View itineraries{% endblock %}
 
 {% block body %}
-<h1>Here's a list of your itineraries:</h1>
 
-<ul>
+<div class="container">
+    <div class="row">
+        <h1>Here's a list of your itineraries:</h1>
+    </div>
+</div>
 
-{% for itin in itin_list %}
-    <p>
-        {{ itin.itin_name }} |
-        {{ itin.itin_location }} |
-        {{ itin.itin_start }} |
-        {{ itin.itin_end }}
-       <a href="/display-itinerary/{{itin.itin_id}}"> <button class="view-itinerary" id={{itin.itin_name}} >View this trip </button></a>
-    </p>
-{% endfor %}
 
-</ul>
+<div class="container">
+
+    <div class="row">
+
+    {% for itin in itin_list %}
+        <div class="col">
+
+            {{ itin.itin_name }} <br>
+            {{ itin.itin_location }} <br>
+            {{ itin.itin_start }} to
+            {{ itin.itin_end }} <br>
+        <a href="/display-itinerary/{{itin.itin_id}}"> <button class="view-itinerary" id={{itin.itin_name}} >View this trip </button></a>
+
+        </div> 
+    {% endfor %}
+    
+    </div>  
+
+</div>
+
 {% endblock %}
