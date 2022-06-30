@@ -18,7 +18,10 @@
             {{ trip.itin_start }} to
             {{ trip.itin_end }} <br>
             <form method="get" action="/edit-itinerary/{{trip.itin_id}}">
-                <button type="submit">Edit trip info</button>
+                <button id="edit-itinerary" type="submit">Edit trip info</button>
+            </form> <br>
+            <form method="get" action="/display-itinerary/{{trip.itin_id}}">
+                <button id="add-flight-hotel" type="submit">Add flight &/or hotel information</button>
             </form> <br>
             <form method="get" action="/search/{{trip.itin_id}}">
                 <button type="submit">Add activities to this trip</button>
@@ -67,15 +70,6 @@
 
     </div>
 </div>
-
-            <!-- <p>
-
-                        {% for scheduled_activity in scheduled_activities %}
-                            {{ scheduled_activity.activity.activity_name }}
-                            {{ scheduled_activity.sched_act_date }}
-                        {% endfor %}
-
-            </p> -->
             
     <div class="container">
 
@@ -85,17 +79,15 @@
 
                 <div class="col">
                     <ul id="sched-date">
-                    {{ date }} <br>
+                    {{ date.strftime('%m-%d') }} <br>
+                    <br>
                     {% for scheduled_activity in scheduled_activities %}
                         {% if scheduled_activity.sched_act_date.date() == date %}
-                            {{ scheduled_activity.activity.activity_name }}
                             {{ scheduled_activity.sched_act_date.time() }}
+                            {{ scheduled_activity.activity.activity_name }} <br>
+                            <br>
                         {% endif %}
                     {% endfor %}
-                    </ul>
-
-                    <ul id="sched-activity-name">
-
                     </ul>
                 </div>
 

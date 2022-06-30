@@ -16,6 +16,8 @@ app.jinja_env.undefined = StrictUndefined
 API_KEY = os.environ['YELP_KEY']
 
 
+
+
 @app.route("/", methods=["GET", "POST"])
 def homepage():
     """View homepage."""
@@ -52,6 +54,9 @@ def register_user():
                 db.session.commit()
                 flash("Account created! Please log in.")
 
+                # if user in session:
+                #     session["user"] = user
+
         else:
             if form.password.errors:
                 for error in form.password.errors:
@@ -62,13 +67,17 @@ def register_user():
 
 
 
-@app.route("/users/<user_id>")
-def show_user(user_id):
+@app.route("/users/my-profile")
+def my_profile():
     """Show details on a particular user."""
 
-    user = User.get_by_id(user_id)
+    if "user_email" in session:
+        user = User.get_by_email(session["user_email"])
+    else:
+        flash("Please log in!")
+        return redirect("/")
 
-    return render_template("user_details.html", user=user)
+    return render_template("user-details.html", user=user)
 
 
 @app.route("/login", methods=["POST"])
@@ -89,8 +98,15 @@ def process_login():
     else:
         # Log in user by storing the user's email in session
         session["user_email"] = user.email
-        # flash(f"Welcome back, {user.email}!")
+        user = User.get_by_email(session["user_email"])
+
         return render_template("user-details.html", user=user)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_email', None)
+    return redirect('/')
 
 
 #ITINERARIES
@@ -194,12 +210,7 @@ def display_itinerary(itin_id):
 
     unscheduled_activities = [s.activity for s in trip.scheduledactivities if not s.sched_act_date]
 
-    print('\n' * 5)
-    print(unscheduled_activities)
-    print('\n' * 5)
-    scheduled_activities = SchedActivity.query.filter(SchedActivity.itin_id==2, SchedActivity.sched_act_date!=None).all()
-    print(scheduled_activities)
-    print('\n' * 5)
+    scheduled_activities = SchedActivity.query.filter(SchedActivity.itin_id==itin_id, SchedActivity.sched_act_date!=None).all()
 
     trip.itin_start = trip.itin_start.strftime('%m-%d-%Y')
     trip.itin_end = trip.itin_end.strftime('%m-%d-%Y')
@@ -210,11 +221,6 @@ def display_itinerary(itin_id):
     for d in itin_dates:
         # conv_date = date.strftime('%m-%d-%Y')
         itin_dates2.append(d.date())
-
-    # for scheduled_activity in scheduled_activities:
-    #     for date in itin_dates2:
-    #         if scheduled_activity.sched_act_date == date:
-    #                 return scheduled_activity.activity.activity_name
 
     return render_template("display-itinerary.html", trip=trip, form=form, unscheduled_activities=unscheduled_activities, 
                                 scheduled_activities=scheduled_activities, itin_dates2=itin_dates2)
@@ -243,6 +249,7 @@ def edit_itinerary_fields():
     db.session.commit()    
     
     return "Success! Field updated."
+
 
 
 #ACTIVITIES
