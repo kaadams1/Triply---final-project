@@ -40,6 +40,7 @@
                     <div class="d-flex w-100 justify-content-between">
                       <a href="{{ business['url'] }}" target="_blank">
                         <h5>{{ business['name'] }}</h5>
+                        <h5>{{ business['location']['address1'] }} {{ business['location']['zip_code'] }}</h5>
 
                         <form method="GET" action="/add-activity">
                             <input type="hidden" id="activity-name" name="activity-name" value="{{ business['name'] }}">

@@ -17,11 +17,40 @@
             {{ trip.itin_location }} <br>
             {{ trip.itin_start }} to
             {{ trip.itin_end }} <br>
+
             <form method="get" action="/edit-itinerary/{{trip.itin_id}}">
                 <button id="edit-itinerary" type="submit">Edit trip info</button>
             </form> <br>
-            <form method="get" action="/display-itinerary/{{trip.itin_id}}">
-                <button id="add-flight-hotel" type="submit">Add flight &/or hotel information</button>
+
+
+            <div id="add-flight-hotel-info">
+                <div>
+                    <label>Add flight info:</label>
+                    <input type="text" name="flight-info" id="flight-info" value="">
+                </div>    
+                <div>
+                    <label>Add hotel info:</label>
+                    <input type="text" name="hotel-info" id="hotel-info" value="">
+                </div>
+
+                <div class="book_btn">
+                    <button id="add-flight-and-hotel">Submit</button>
+                </div>
+            </div>
+
+            <div id="display-flight-and-hotel">
+                <div>
+                    <label>Your flight info: </label><div id="display-flight" value=""></div>
+                </div>
+                <div>
+                    <label>Your hotel info: </label><div id="display-hotel" value=""></div>
+                </div>
+                <div class="book_btn">
+                    <button id="edit-flight-and-hotel">Edit flight and hotel</button>
+                </div>
+            </div>
+
+                
             </form> <br>
             <form method="get" action="/search/{{trip.itin_id}}">
                 <button type="submit">Add activities to this trip</button>
@@ -36,6 +65,7 @@
 </div>
 
 
+
 <div class="container">
     <div class="row">
         <div class="col">
@@ -48,7 +78,7 @@
                                     <span>{{ unscheduled_activity.activity_name }}</span>
 
                                     <form method="post" action="/schedule-activity/{{trip.itin_id}}/{{unscheduled_activity.activity_id}}">
-                                        <!-- could include hidden input instead-->
+                                        <!-- could include hidden input instead -->
                                         <input type="datetime-local" name="date">
                                         <button name="schedule" id="schedule" type="submit">Add to schedule</button>
 
@@ -96,5 +126,41 @@
 
         </div>
     </div>
+
+
+<script src="/static/js/addFlightHotel.js"></script>
+
+<script>
+
+    const targetAdd = document.getElementById("add-flight-hotel-info");
+    const addBtn = document.getElementById("add-flight-and-hotel");
+
+    const targetEdit = document.getElementById("display-flight-and-hotel");
+    const editBtn = document.getElementById("edit-flight-and-hotel");
+
+    // set style not display on default - in CSS stylesheet
+    // if click change the display
+
+    addBtn.onclick = function () {
+      if (targetAdd.style.display !== "none") {
+        targetAdd.style.display = "none";
+        targetEdit.style.display = "block";
+      } else {
+        targetAdd.style.display = "block";
+      }
+    };
+
+    editBtn.onclick = function () {
+      if (targetEdit.style.display !== "none") {
+        targetEdit.style.display = "none";
+        targetAdd.style.display = "block";
+      } else {
+        targetEdit.style.display = "block";
+      }
+    };
+
+</script>
+
+
 
 {% endblock %}

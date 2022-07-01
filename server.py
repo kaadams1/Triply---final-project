@@ -251,6 +251,16 @@ def edit_itinerary_fields():
     return "Success! Field updated."
 
 
+@app.route("/add-flight-and-hotel", methods=["POST"])
+def add_flight_hotel_info():
+    """Add flight and hotel info to itinerary page."""
+
+    flight =  request.json.get('flightInfo')
+    hotel = request.json.get('hotelInfo')
+
+    return {"flight": flight, "hotel": hotel}
+
+
 
 #ACTIVITIES
 
