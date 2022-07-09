@@ -36,9 +36,6 @@ class User(db.Model):
     def get_by_email(cls, email):
         return cls.query.filter(User.email == email).first()
 
-    # @classmethod
-    # def all_users(cls):
-    #     return cls.query.all()
 
 
 class Itinerary(db.Model):
@@ -49,9 +46,11 @@ class Itinerary(db.Model):
     itin_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     itin_name = db.Column(db.String(30), nullable=False, unique=False)
-    itin_location = db.Column(db.String(30), nullable=False, unique=False)
+    itin_location = db.Column(db.String, nullable=False, unique=False)
     itin_start = db.Column(db.Date, nullable=False, unique=False)
     itin_end = db.Column(db.Date, nullable=False, unique=False)
+    flight_info = db.Column(db.String, nullable=True, unique=False)
+    hotel_info = db.Column(db.String, nullable=True, unique=False)
 
     user = db.relationship("User", backref="itineraries")    
     destinations = db.relationship("Destination", backref="itinerary") #many to one
@@ -59,9 +58,10 @@ class Itinerary(db.Model):
     activities = db.relationship("Activity", secondary="scheduledactivities", backref="itineraries")
 
     @classmethod
-    def create(cls, user_id, itin_name, itin_location, itin_start, itin_end):
+    def create(cls, user_id, itin_name, itin_location, itin_start, itin_end, flight_info, hotel_info):
        """Create and return a new itinerary."""
-       return cls(user_id=user_id, itin_name=itin_name, itin_location=itin_location, itin_start=itin_start, itin_end=itin_end)
+       return cls(user_id=user_id, itin_name=itin_name, itin_location=itin_location, itin_start=itin_start, 
+                    itin_end=itin_end, flight_info=flight_info, hotel_info=hotel_info)
 
     @classmethod
     def check_for_trip(cls, user_id=User.user_id, itin_location=itin_location, itin_start=itin_start):
@@ -82,18 +82,22 @@ class Itinerary(db.Model):
         return grab_itin
 
     @classmethod
-    def update(cls, itin_id, updated_name = None, updated_location = None, updated_start = None, updated_end = None):
-       """Update and return a new itinerary."""
-       trip = cls.query.get(itin_id)
+    def update(cls, itin_id, updated_name=None, updated_location=None, updated_start=None, updated_end=None, updated_flight=None, updated_hotel=None):
+        """Update and return a new itinerary."""
+        trip = cls.query.get(itin_id)
 
-       if updated_name:
+        if updated_name:
             trip.itin_name = updated_name
-       if updated_location:
+        if updated_location:
             trip.itin_location = updated_location
-       if updated_start:
+        if updated_start:
             trip.itin_start = updated_start
-       if updated_end:
+        if updated_end:
             trip.itin_end = updated_end
+        if updated_flight:
+            trip.flight_info = updated_flight
+        if updated_hotel:
+            trip.hotel_info = updated_hotel
 
 
     def __repr__(self):
@@ -109,15 +113,20 @@ class Activity(db.Model):
     activity_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     activity_name = db.Column(db.String, nullable=False, unique=False)
     city_id = db.Column(db.Integer, db.ForeignKey("cities.city_id"))
+    longitude = db.Column(db.String, nullable=False, unique=False)
+    latitude = db.Column(db.String, nullable=False, unique=False)
+    address = db.Column(db.String, nullable=False, unique=False)
+    zipcode = db.Column(db.String, nullable=False, unique=False)
+    yelp_url = db.Column(db.String, nullable=True, unique=False)
 
     city = db.relationship("City", backref="activities")
     scheduledactivities = db.relationship("SchedActivity", backref="activity")
     #secondary relationship to itinerary via backref
 
     @classmethod
-    def create(cls, activity_name, city_id):
+    def create(cls, activity_name, city_id, longitude, latitude, address, zipcode, yelp_url):
        """Create and return a new activity."""
-       return cls(activity_name=activity_name, city_id=city_id)
+       return cls(activity_name=activity_name, city_id=city_id, longitude=longitude, latitude=latitude, address=address, zipcode=zipcode, yelp_url=yelp_url)
 
     @classmethod
     def get_by_id(cls, activity_id):
@@ -131,6 +140,8 @@ class Activity(db.Model):
         grab_unsched_activities = Activity.query.filter_by(itin_id=itin_id).all()
         return grab_unsched_activities
 
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def __repr__(self):
         return f"<Activity activity_id={self.activity_id} activity_name={self.activity_name}>"
@@ -166,8 +177,8 @@ class SchedActivity(db.Model):
         get_by_trip_act = SchedActivity.query.filter_by(itin_id=itin_id, activity_id=activity_id).first()
         return get_by_trip_act
 
-    # @classmethod
-    # def get_sched_act_for_trip
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def __repr__(self):
         return f"<Scheduled activity sched_act_id={self.sched_act_id} activity_id={self.activity_id} itin_id={self.itin_id} sched_act_date={self.sched_act_date}>"
@@ -180,16 +191,19 @@ class City(db.Model):
     __tablename__ = "cities"
 
     city_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    city_name = db.Column(db.String(25), nullable=False, unique=False)
-    # country_name = db.Column(db.String(25), nullable=False, unique=False)
+    city_name = db.Column(db.String, nullable=False, unique=False)
+    # state_name = db.Column(db.String, nullable=True, unique=False)
+    # country_name = db.Column(db.String, nullable=False, unique=False)
+    city_longitude = db.Column(db.String, nullable=False, unique=False)
+    city_latitude = db.Column(db.String, nullable=False, unique=False)
 
     # activities = db.relationship("Activity", backref="city") - attibute for free
     destinations = db.relationship("Destination", backref="city")
 
     @classmethod
-    def create(cls, city_name):
+    def create(cls, city_name, city_longitude, city_latitude):
        """Create and add city to the database."""
-       return cls(city_name=city_name)
+       return cls(city_name=city_name, city_longitude=city_longitude, city_latitude=city_latitude)
 
     @classmethod
     def get_by_id(cls, city_id):

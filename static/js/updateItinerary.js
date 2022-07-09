@@ -1,3 +1,5 @@
+// alert("Javascript is connected")
+
 editName = document.querySelector('.edit-itin-name');
 
 editLocation = document.querySelector('.edit-itin-location');
@@ -16,7 +18,8 @@ editEnd = document.querySelector('.edit-itin-end');
             itin_id: editName.id,
         };
         updateItinerary(formInputs, "name", newName);
-
+        nameSpan = document.querySelector('#nameEdit');
+        nameSpan.innerHTML = newName;
     });
 
 
@@ -28,7 +31,8 @@ editEnd = document.querySelector('.edit-itin-end');
             itin_id: editName.id,
         };
         updateItinerary(formInputs, "location", newLocation);
-
+        locationSpan = document.querySelector('#locationEdit');
+        locationSpan.innerHTML = newLocation;
     });
 
 
@@ -40,7 +44,8 @@ editEnd = document.querySelector('.edit-itin-end');
             itin_id: editName.id,
         };
         updateItinerary(formInputs, "start", newStart);
-
+        startSpan = document.querySelector('#startEdit');
+        startSpan.innerHTML = newStart;
     });
 
 
@@ -52,7 +57,8 @@ editEnd = document.querySelector('.edit-itin-end');
             itin_id: editName.id,
         };
         updateItinerary(formInputs, "end", newEnd);
-
+        endSpan = document.querySelector('#endEdit');
+        endSpan.innerHTML = newEnd;
     });
 
 

@@ -1,25 +1,32 @@
-// alert("Javascript is connected")
 
-document.querySelector('#add-flight-and-hotel').addEventListener('click', (evt)=> {
-    evt.preventDefault();
 
-    const formInputs = {
-        flightInfo : document.getElementById("flight-info").value,
-        hotelInfo : document.getElementById("hotel-info").value,
-    };
+editFlightHotel = document.querySelector('#add-flight-and-hotel');
 
-    fetch('/add-flight-and-hotel', {
-        method: 'POST',
-        body: JSON.stringify(formInputs),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then((response) => response.json())
-        .then((responseJson) => {
-            // alert(responseJson.status);
-            console.log(responseJson)
-            document.querySelector('#display-flight').innerHTML = responseJson.flight
-            document.querySelector('#display-hotel').innerHTML = responseJson.hotel
+    editFlightHotel.addEventListener('click', () => {
+
+        const newFlight = document.querySelector('#flight-info').value;
+        const newHotel = document.querySelector('#hotel-info').value;
+
+        const formInputs = {
+            updated_flight: newFlight,
+            itin_id: window.location.href.split("/")[4],
+            updated_hotel: newHotel,
+        };
+
+        fetch('/add-flight-and-hotel',  {
+            method: 'POST',
+            body: JSON.stringify(formInputs),
+            headers:  {
+                'Content-Type': 'application/json',
+            },
+        }).then((response) => {
+            if (response.ok)  {
+                document.querySelector('#display-flight').innerHTML = newFlight;
+                document.querySelector('#display-hotel').innerHTML = newHotel;
+            } else {
+                alert('Failed to update trip.');
+            }
         });
-})
+
+    });
+

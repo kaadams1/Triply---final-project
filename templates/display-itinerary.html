@@ -10,19 +10,52 @@
 
         <div class="col">
 
+    <!-- DISPLAY ITINERARY -->
         <h1>Your itinerary:</h1>
 
-        <p>
-            {{ trip.itin_name }} <br>
-            {{ trip.itin_location }} <br>
-            {{ trip.itin_start }} to
-            {{ trip.itin_end }} <br>
+        <div id="display-itinerary-details">
+            <span id="name">
+                {{ trip.itin_name }} </span> <br>
+                <span id="location">
+                    {{ trip.itin_location }} </span> <br>
+                    <span id="start">
+                        {{ trip.itin_start }} </span>  to
+                        <span id="end">
+                            {{ trip.itin_end }} </span> <br>
 
-            <form method="get" action="/edit-itinerary/{{trip.itin_id}}">
-                <button id="edit-itinerary" type="submit">Edit trip info</button>
-            </form> <br>
+            <div class="book_btn">
+                <button id="edit-itinerary">Edit trip info</button>
+            </div> <br>
+        </div>
 
+    <!-- EDIT ITINERARY -->
+            <div id="edit-itinerary-details">
+                <p>
+                <span id="nameEdit">
+                {{ trip.itin_name }} </span> <button class="edit-itin-name" id={{trip.itin_id}}>Edit name</button>
+                </p>
+                <p>
+                <span id="locationEdit">
+                {{ trip.itin_location }} </span> <button class="edit-itin-location" id={{trip.itin_location}}>Edit location</button>
+                </p>
+                <p>
+                <span id="startEdit">
+                {{ trip.itin_start }} </span> <button class="edit-itin-start" id={{trip.itin_start}}>Edit start date</button>
+                </p>
+                <p>
+                <span id="endEdit">
+                {{ trip.itin_end }} </span> <button class="edit-itin-end" id={{trip.itin_end}}>Edit end date</button>
+                </p>
+                
+                <div class="book_btn">
+                    <button id="save-itin-changes">Save changes</button>
+                </div>
+        
+            </div>
 
+    <!-- ADD FLIGHT/HOTEL INFO -->
+
+            <!-- IF FLIGHT &/OR HOTEL INFO, THEN THIS SECTION NEEDS TO BE HIDDEN -->
             <div id="add-flight-hotel-info">
                 <div>
                     <label>Add flight info:</label>
@@ -38,30 +71,36 @@
                 </div>
             </div>
 
+    <!-- DISPLAY FLIGHT/HOTEL INFO -->
             <div id="display-flight-and-hotel">
                 <div>
-                    <label>Your flight info: </label><div id="display-flight" value=""></div>
+                    <label>Your flight info: </label>
+                    <span id="flight">
+                        <div id="display-flight" value=""></div>
+                    </span>
                 </div>
                 <div>
-                    <label>Your hotel info: </label><div id="display-hotel" value=""></div>
+                    <label>Your hotel info: </label>
+                    <span id="hotel">
+                        <div id="display-hotel" value=""></div>
+                    </span>
                 </div>
                 <div class="book_btn">
                     <button id="edit-flight-and-hotel">Edit flight and hotel</button>
                 </div>
             </div>
 
-                
+    <!-- ADD ACTIVITIES WITH YELP SEARCH -->
             </form> <br>
             <form method="get" action="/search/{{trip.itin_id}}">
                 <button type="submit">Add activities to this trip</button>
             </form>
-        </p>
 
-        <p>
+
 
         </div>
-    </div>
 
+    </div>
 </div>
 
 
@@ -70,12 +109,13 @@
     <div class="row">
         <div class="col">
 
+<!-- UNSCHEDULED ACTIVITIES ADDED FROM YELP API -->
             <h2>Activities to be scheduled:</h2>
 
             <p>
                     {% for unscheduled_activity in unscheduled_activities %}
                         <ul id="unsched-activity-name">
-                                    <span>{{ unscheduled_activity.activity_name }}</span>
+                                    <span><a href="{{unscheduled_activity.yelp_url}}">{{ unscheduled_activity.activity_name }}</a></span>
 
                                     <form method="post" action="/schedule-activity/{{trip.itin_id}}/{{unscheduled_activity.activity_id}}">
                                         <!-- could include hidden input instead -->
@@ -96,6 +136,7 @@
 
     <div class="row">
 
+<!-- SCHEDULED ACTIVITIES ADDED TO SCHEDULE FROM UNSCHEDULED ACTIVITIES LIST -->
             <h2>Your scheduled activities:</h2>
 
     </div>
@@ -114,7 +155,7 @@
                     {% for scheduled_activity in scheduled_activities %}
                         {% if scheduled_activity.sched_act_date.date() == date %}
                             {{ scheduled_activity.sched_act_date.time() }}
-                            {{ scheduled_activity.activity.activity_name }} <br>
+                            <a href="{{scheduled_activity.activity.yelp_url}}">{{ scheduled_activity.activity.activity_name }}</a> <br>
                             <br>
                         {% endif %}
                     {% endfor %}
@@ -127,19 +168,60 @@
         </div>
     </div>
 
+<!-- MAP FEATURE DIV -->
+
+<div class="container">
+    <div class="row">
+        <div id="city_map"></div>
+    </div>
+</div>
+
+
+<!-- JAVASCRIPT -->
 
 <script src="/static/js/addFlightHotel.js"></script>
+<script src="/static/js/updateItinerary.js"></script>
 
-<script>
+
+<!-- TOGGLES -->
+<script> // toggle between display and edit itinerary details
+
+    const targetEditItin = document.getElementById("edit-itinerary-details");
+    const editItinBtn = document.getElementById("edit-itinerary");
+
+    const targetViewItin = document.getElementById("display-itinerary-details");
+    const viewItinBtn = document.getElementById("save-itin-changes");
+
+    //edit itinerary details - view edit fields
+    editItinBtn.onclick = function () {
+      if (targetViewItin.style.display !== "none") {
+        targetViewItin.style.display = "none";
+        targetEditItin.style.display = "block";
+      } else {
+        targetViewItin.style.display = "block";
+      }
+    };
+
+    //view edited itinerary
+    viewItinBtn.onclick = function () {
+      if (targetEditItin.style.display !== "none") {
+        targetEditItin.style.display = "none";
+        targetViewItin.style.display = "block";
+      } else {
+        targetEditItin.style.display = "block";
+      }
+    };
+
+</script>
+
+
+<script> // toggle between display and edit flight and hotel info
 
     const targetAdd = document.getElementById("add-flight-hotel-info");
     const addBtn = document.getElementById("add-flight-and-hotel");
 
     const targetEdit = document.getElementById("display-flight-and-hotel");
     const editBtn = document.getElementById("edit-flight-and-hotel");
-
-    // set style not display on default - in CSS stylesheet
-    // if click change the display
 
     addBtn.onclick = function () {
       if (targetAdd.style.display !== "none") {
@@ -161,6 +243,45 @@
 
 </script>
 
+
+
+<!-- LEAFLET JS MAP -->
+<script>
+
+    // initialize Leaflet
+    var cityMap = L.map('city_map').setView([{{city_lat}}, {{city_lng}}], 10);
+
+    // add OSM tile
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+    }).addTo(cityMap);
+
+    // show the scale bar on the lower left corner
+    L.control.scale({imperial: true, metric: true}).addTo(cityMap);
+
+    // show a city marker on the map
+    var cityMarker = L.marker([{{city_lat}}, {{city_lng}}]).bindPopup("City center").addTo(cityMap);
+
+    // // create a list of markers from activities coordinates
+    const u = {{unscheduled_activities_dict | tojson}};
+
+    for (var i=0; i < u.length; ++i) {
+        var activityMarker = L.marker([u[i].latitude, u[i].longitude])
+        .bindPopup(u[i].activity_name)
+        .addTo(cityMap);
+    }
+
+    // // create a list of markers from scheduled activities coordinates
+    const s = {{scheduled_activities_dict | tojson}};
+
+    for (var i=0; i < s.length; ++i) {
+        var schedActMarker = L.marker([s[i].latitude, s[i].longitude])
+        .bindPopup(s[i].activity_name)
+        .addTo(cityMap);
+    }
+
+</script>
 
 
 {% endblock %}

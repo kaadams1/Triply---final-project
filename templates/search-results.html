@@ -45,7 +45,13 @@
                         <form method="GET" action="/add-activity">
                             <input type="hidden" id="activity-name" name="activity-name" value="{{ business['name'] }}">
                             <input type="hidden" id="itin-id" name="itin-id" value="{{ trip.itin_id }}">
-                        <button id="add-activity" type="submit">Add to itinerary</button></form>
+                            <input type="hidden" id="latitude" name="latitude" value="{{ business['coordinates']['latitude'] }}">
+                            <input type="hidden" id="longitude" name="longitude" value="{{ business['coordinates']['longitude'] }}">
+                            <input type="hidden" id="address" name="address" value="{{ business['location']['address1'] }}">
+                            <input type="hidden" id="zipcode" name="zipcode" value="{{ business['location']['zip_code'] }}">
+                            <input type="hidden" id="yelp_url" name="yelp_url" value="{{ business['url'] }}">
+                            <button id="add-activity" type="submit"> Add to itinerary</button>
+                        </form>
                       </a>
                     </div>
                     

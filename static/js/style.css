@@ -1,1 +1,11 @@
 #display-flight-and-hotel { display:none; }
+
+#edit-itinerary-details { display:none; }
+
+#display-notes { display:none; }
+
+#map { height:600px; z-index:10; }
+
+#city_map { height:600px; z-index:10; }
+
+/* body { background-color: red;} */
