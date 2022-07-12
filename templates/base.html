@@ -6,13 +6,54 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-
     +0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
+    <!-- TITLE FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+    <!-- OTHER GOOGLE FONTS -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Poppins">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Nunito">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Quicksand">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Didact+Gothic">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Yellowtail">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Abril+Fatface">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Pacifico">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Moon">
+
+
+
+    <!-- CSS STYLESHEET LINK -->
     <link href="/static/js/style.css" rel="stylesheet">
 
+    <!-- NAVBAR -->
+    <div class="navbar-class">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
       <a class="navbar-brand" href="#">Triply</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -30,14 +71,12 @@
             <a class="nav-link" href="/logout">Logout</a>
           </li>
           {% endif %}
-          <!-- <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li> -->
+
         </ul>
       </div>
     </nav>
     </div>
-
+    </div>
 
 
       <!-- LEAFLET STYLESHEET -->
@@ -72,24 +111,20 @@
     {% endblock %}
   </head>
   <body>
+            <!-- BACKGROUND IMAGE -->
+            <div class="bg-container">
+                <div class="blur">
+                  {% block body %}
+                  <!-- content of your webpage -->
+          
+                  {% endblock %}
+                </div>
+            </div>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        {% for message in messages %}
-         <p>{{ message }}</p>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-    
 
-    {% block body %}
-        <!-- content of your webpage -->
+
+    {% block after_body %}
     {% endblock %}
-
-    {% block after_body %}{% endblock %}
-
-
-    <!-- <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script> -->
 
     <!-- Bootstrap JavaScript Bundle with Popper (a Bootstrap dependency for popovers) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-

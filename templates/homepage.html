@@ -3,54 +3,59 @@
 {% block title %}Triply{% endblock %}
 
 {% block body %}
+
+
+<div class="register-login-boxes">
+
+
   <h1>Welcome to Triply!</h1>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-9">
 
 
-        <h2>New to Triply? Create an account:</h2>
+        <h4 id="register-header">New to Triply? Create an account:</h4>
 
       <form id="register" action="/users" method="POST">
 
-        <div class="form-group" name="first_name">
-          <label>First name </label>
-          <input type="text" name="first_name" id="first_name" value="" required>
+        <div name="first_name">
+            <input type="text" name="first_name" id="first_name" value="" class="form-control" placeholder="First name" required />
+            <!-- <label class="form-label" for="first_name">First name </label> -->
         </div>
-        <div class="form-group" name="last_name">
-          <label>Last name </label>
-          <input type="text" name="last_name" id="last_name" value="" required>
+        <div name="last_name">
+          <!-- <label class="form-label"f>Last name </label> -->
+          <input type="text" name="last_name" id="last_name" value="" class="form-control" placeholder="Last name" required>
         </div>
-        <div class="form-group" name="email">
-          <label>Email address </label>
-          <input type="text" name="email" id="email" value="" required>
+        <div name="email">
+          <!-- <label class="form-label">Email address </label> -->
+          <input type="text" name="email" id="email" value="" class="form-control" placeholder="Email address" required>
         </div>
-        <div class="form-group" name="password">
-          <label>Create password </label>
-          <input type="password" name="password" id="password" value="" required>
+        <div name="password">
+          <!-- <label class="form-label">Create password </label> -->
+          <input type="password" name="password" id="password" value="" class="form-control" placeholder="Create password" required>
 
         <div class="form-group">
           <input class="btn btn-primary" id="signup" name="signup" type="submit" value="Signup">
         </div>  
 
       </form>
-
+    </div>
       </div>
 
+      <div class="col-lg-9">
+        <h4 id="login-header">Already have an account? Log in:</h4>
 
-      <div class="col">
-        <h2>Already have an account? Log in:</h2>
-
+      <div class="form-outline">
         <form id="login" action="/login" method="POST">
 
-          <div class="form-group" name="email">
-            <label>Email address </label>
-            <input type="text" name="email" id="email" value="" required>
+          <div name="email">
+            <!-- <label class="form-label">Email address </label> -->
+            <input type="text" name="email" id="email" value="" class="form-control" placeholder="Email address" required>
           </div>
-          <div class="form-group" name="password">
-            <label>Password </label>
-            <input type="password" name="password" id="password" value="" required>
+          <div name="password">
+            <!-- <label class="form-label">Password </label> -->
+            <input type="password" name="password" id="password" value="" class="form-control" placeholder="Password" required>
           </div>
           <div class="form-group">
             <input class="btn btn-primary" id="login" name="login" type="submit" value="Login">
@@ -59,8 +64,16 @@
           
         </form>
       </div>
+      </div>
     
     </div>
 
   </div>
+
+</div>
+
+
+<div class="photo-attribution">
+  Photo by <a href="https://unsplash.com/@thkelley?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Thomas Kelley</a> on <a href="https://unsplash.com/s/photos/travel-city?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+</div>
 {% endblock %}

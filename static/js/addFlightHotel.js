@@ -29,4 +29,3 @@ editFlightHotel = document.querySelector('#add-flight-and-hotel');
         });
 
     });
-

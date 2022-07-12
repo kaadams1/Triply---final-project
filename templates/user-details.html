@@ -3,13 +3,28 @@
 {% block title %}{{ user.email }}'s Page{% endblock %}
 
 {% block body %}
-<h1>Welcome back, {{ user.user_fname }}!</h1>
 
-<p>
-    <a href="/new-itinerary">Click here to start a new itinerary</a>
-</p>
-<p>
-    <a href="/view-itineraries">Click here to view your itineraries</a>
-</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+            <h1>Welcome back, {{ user.user_fname }}!</h1>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+            <a href="/new-itinerary">Click here to start a new itinerary</a>
+
+        </div>
+
+        <div class="col">
+
+            <a href="/view-itineraries">Click here to view your itineraries</a>
+
+        </div>
+    </div>
 
 {% endblock %}

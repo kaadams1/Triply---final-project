@@ -183,11 +183,6 @@ def display_itinerary(itin_id):
     flight_info = trip.flight_info #getting from database - this is working
     hotel_info = trip.hotel_info #getting from database - this is working
 
-    print('\n' * 5)
-    print(flight_info)
-    print(hotel_info)
-    print('\n' * 5)
-
     unscheduled_activities = [s.activity for s in trip.scheduledactivities if not s.sched_act_date]
 
     unscheduled_activities_dict = [s.activity.as_dict() for s in trip.scheduledactivities if not s.sched_act_date]
@@ -196,8 +191,8 @@ def display_itinerary(itin_id):
 
     scheduled_activities_dict = [s.activity.as_dict() for s in trip.scheduledactivities if s.sched_act_date]
 
-    trip.itin_start = trip.itin_start.strftime('%m-%d-%Y')
-    trip.itin_end = trip.itin_end.strftime('%m-%d-%Y')
+    trip.itin_start = trip.itin_start.strftime('%A %m/%d/%Y')
+    trip.itin_end = trip.itin_end.strftime('%A %m/%d/%Y')
     
     itin_dates = pd.date_range(start=trip.itin_start, end=trip.itin_end)
     itin_dates2 = []

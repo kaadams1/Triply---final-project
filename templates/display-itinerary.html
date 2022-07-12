@@ -53,10 +53,19 @@
         
             </div>
 
-    <!-- ADD FLIGHT/HOTEL INFO -->
+    <!-- OPEN FLIGHT/HOTEL INFO FIELDS -->
 
-            <!-- IF FLIGHT &/OR HOTEL INFO, THEN THIS SECTION NEEDS TO BE HIDDEN -->
-            <div id="add-flight-hotel-info">
+        {% if (flight_info is none or hotel_info is none) %}
+
+            <!-- BUTTON TO ADD FLIGHT/HOTEL INFO IF NONE IN DB -->
+            <div id="open-flight-hotel-fields">
+                <div class="book_btn">
+                    <button id="open-flight-and-hotel">Add flight &/or hotel</button>
+                </div>
+            </div>
+
+            <!-- IF FLIGHT &/OR HOTEL INFO IN DB, THEN THIS SECTION NEEDS TO BE HIDDEN -->
+            <div id="add-flight-hotel-info" style="display:none">
                 <div>
                     <label>Add flight info:</label>
                     <input type="text" name="flight-info" id="flight-info" value="">
@@ -71,24 +80,84 @@
                 </div>
             </div>
 
-    <!-- DISPLAY FLIGHT/HOTEL INFO -->
-            <div id="display-flight-and-hotel">
+    <!-- DISPLAY FLIGHT/HOTEL INFO IF IN DB-->
+            <div id="display-flight-and-hotel" style="display:none">
                 <div>
                     <label>Your flight info: </label>
                     <span id="flight">
                         <div id="display-flight" value=""></div>
+                        {% if flight_info %}
+                            {{ flight_info }}
+                        {% endif %}
                     </span>
                 </div>
                 <div>
                     <label>Your hotel info: </label>
                     <span id="hotel">
                         <div id="display-hotel" value=""></div>
+                        {% if hotel_info %}
+                            {{ hotel_info }}
+                        {% endif %}
                     </span>
                 </div>
                 <div class="book_btn">
                     <button id="edit-flight-and-hotel">Edit flight and hotel</button>
                 </div>
             </div>
+
+        {% else %}
+
+                    <!-- BUTTON TO ADD FLIGHT/HOTEL INFO IF NONE IN DB -->
+                    <div id="open-flight-hotel-fields" style="display:none">
+                        <div class="book_btn">
+                            <button id="open-flight-and-hotel">Add flight &/or hotel</button>
+                        </div>
+                    </div>
+
+                    <!-- IF FLIGHT &/OR HOTEL INFO IN DB, THEN THIS SECTION NEEDS TO BE HIDDEN -->
+                    <div id="add-flight-hotel-info">
+                        <div>
+                            <label>Add flight info:</label>
+                            <input type="text" name="flight-info" id="flight-info" value="">
+                        </div>    
+                        <div>
+                            <label>Add hotel info:</label>
+                            <input type="text" name="hotel-info" id="hotel-info" value="">
+                        </div>
+        
+                        <div class="book_btn">
+                            <button id="add-flight-and-hotel">Submit</button>
+                        </div>
+                    </div>
+        
+            <!-- DISPLAY FLIGHT/HOTEL INFO IF IN DB-->
+                    <div id="display-flight-and-hotel">
+                        <div>
+                            <label>Your flight info: </label>
+                            <span id="flight">
+                                <div id="display-flight" value="">
+                                {% if flight_info %}
+                                    {{ flight_info }}
+                                {% endif %}
+                                </div>
+                            </span>
+                        </div>
+                        <div>
+                            <label>Your hotel info: </label>
+                            <span id="hotel">
+                                <div id="display-hotel" value="">
+                                {% if hotel_info %}
+                                    {{ hotel_info }}
+                                {% endif %}
+                                </div>
+                            </span>
+                        </div>
+                        <div class="book_btn">
+                            <button id="edit-flight-and-hotel">Edit flight and hotel</button>
+                        </div>
+                    </div>
+
+        {% endif %}
 
     <!-- ADD ACTIVITIES WITH YELP SEARCH -->
             </form> <br>
@@ -119,7 +188,7 @@
 
                                     <form method="post" action="/schedule-activity/{{trip.itin_id}}/{{unscheduled_activity.activity_id}}">
                                         <!-- could include hidden input instead -->
-                                        <input type="datetime-local" name="date">
+                                        <input type="datetime-local" name="date" onsubmit="return dateRequired()" required>
                                         <button name="schedule" id="schedule" type="submit">Add to schedule</button>
 
                                     </form>
@@ -150,11 +219,11 @@
 
                 <div class="col">
                     <ul id="sched-date">
-                    {{ date.strftime('%m-%d') }} <br>
+                    {{ date.strftime('%a %m/%d') }} <br>
                     <br>
                     {% for scheduled_activity in scheduled_activities %}
                         {% if scheduled_activity.sched_act_date.date() == date %}
-                            {{ scheduled_activity.sched_act_date.time() }}
+                            {{ scheduled_activity.sched_act_date.strftime("%I:%M %p") }}
                             <a href="{{scheduled_activity.activity.yelp_url}}">{{ scheduled_activity.activity.activity_name }}</a> <br>
                             <br>
                         {% endif %}
@@ -217,11 +286,23 @@
 
 <script> // toggle between display and edit flight and hotel info
 
+    const targetOpen = document.getElementById("open-flight-hotel-fields");
+    const openBtn = document.getElementById("open-flight-and-hotel");
+
     const targetAdd = document.getElementById("add-flight-hotel-info");
     const addBtn = document.getElementById("add-flight-and-hotel");
 
     const targetEdit = document.getElementById("display-flight-and-hotel");
     const editBtn = document.getElementById("edit-flight-and-hotel");
+
+    openBtn.onclick = function () {
+      if (targetOpen.style.display !== "none") {
+        targetOpen.style.display = "none"; // this part works, toggles to none
+        targetAdd.style.display = "block"; // this part doesn't work, doesn't display
+      } else {
+        targetOpen.style.display = "block";
+      }  
+    };
 
     addBtn.onclick = function () {
       if (targetAdd.style.display !== "none") {
@@ -234,8 +315,8 @@
 
     editBtn.onclick = function () {
       if (targetEdit.style.display !== "none") {
-        targetEdit.style.display = "none";
-        targetAdd.style.display = "block";
+        targetEdit.style.display = "none"; // not working, won't toggle off
+        targetAdd.style.display = "block"; // not working, won't toggle on
       } else {
         targetEdit.style.display = "block";
       }
@@ -243,7 +324,17 @@
 
 </script>
 
+<!-- REQUIRED DATETIME -->
+<script>
+    function requiredDate() {
+        var act_date = document.getElementById("date").value;
 
+        if (act_date === "") {
+            alert("Please enter a valid date!!");
+            return false
+        }
+    }
+</script>
 
 <!-- LEAFLET JS MAP -->
 <script>
