@@ -4,10 +4,6 @@
 
 #edit-itinerary-details { display:none; }
 
-html, body {
-    margin:0;
- }
-
 .bg-container {
     background-image: url("/static/js/Brooklyn photo.jpg");
     background-size: 100vw 100vh;
@@ -28,10 +24,17 @@ html, body {
     min-height: 100vh;
 }
 
-body { font-family: 'Helvetica'; }
+body { 
+    font-family: 'Helvetica'; 
+}
+
+html, body {
+    margin:0;
+}
 
 h1 { 
-    text-align:center; font-family: 'Poppins'; 
+    text-align:center; 
+    font-family: 'Poppins'; 
 }
 
 h2 { 
@@ -44,9 +47,39 @@ h3 {
     color: #538E65;
 }
 
-.navbar-container { background-color: black; }
-.navbar-brand { font-family: 'Yellowtail'; padding-left: 2em; font-size: 25px;}
-.nav-item { font-family: 'Poppins'; }
+h4 {
+    font-family: 'Poppins';
+    color: #538E65;
+    font-size: 13pt;
+}
+
+.navbar-container { 
+    background-color: black; 
+}
+
+.navbar-brand { 
+    font-family: 'Yellowtail'; 
+    padding-left: 2em; 
+    font-size: 25px;
+}
+
+.nav-item { 
+    font-family: 'Poppins'; 
+}
+
+.nav-item::after {
+    content: '';
+    display: block;
+    width: 0px;
+    height: 2px;
+    background: #626e96;
+    transition: 0.4s;
+}
+
+.nav-item:hover::after {
+    width: 75%;
+}
+
 nav .navbar-nav li a {
     color: #538E65 !important;
     margin-right: 30px;
@@ -58,6 +91,10 @@ a:link {
 
 a:visited {
     color: #538E65;
+}
+
+a:hover {
+    color:#c9c6c7;
 }
 
 #welcome-header {
@@ -88,10 +125,12 @@ a:visited {
 
 #register-header {
     padding-top: 1em;
+    font-size: 15pt;
 }
 
 #login-header {
     padding-top: 1em;
+    font-size: 15pt;
 }
 
 .welcome-back {
@@ -154,7 +193,7 @@ a:visited {
     padding-left:1.5em;
     padding-bottom:.5em;
     width:280px;
-    border-radius: 25px;
+    border-radius: 10px;
     font-family: 'Poppins';
     text-align: center;
 }
@@ -234,6 +273,12 @@ a:visited {
     border-radius: 25px;
 }
 
+#name {
+    font-family: 'Poppins';
+    color: #538E65;
+    font-size: 15pt;
+}
+
 #edit-itinerary-details {
     margin-bottom: 10px;
     margin-top: 0px;
@@ -243,6 +288,17 @@ a:visited {
     padding-left:1.5em;
     padding-bottom:.5em;
     border-radius: 10px;
+}
+
+#open-flight-hotel-fields {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    border: 1px solid black;
+    background-color:black;
+    padding-top:.5em;
+    padding-left:1.5em;
+    padding-bottom:.5em;
+    border-radius: 25px;
 }
 
 #display-flight-and-hotel {
@@ -329,11 +385,11 @@ a:visited {
     margin: 30px;
     margin-left: 60px;
     width:40%;
-    height: 75%;
+    height: 100%;
 }
 
 #city_map { 
-    height:500px;
+    height:525px;
     z-index:10; 
     margin-top:10px;
     margin-bottom:10px;
@@ -359,7 +415,6 @@ a:visited {
     margin-top: 10px;
 }
 
-
 #activities-list-container {
     width: 75%;
 }
@@ -383,7 +438,9 @@ a:visited {
 
 .btn {
     margin-bottom: 5px;
-    color: #538E65;
+    color: #626e96;
+    margin-top: 5px;
+    font-weight: bold;
 }
 
 #flight-info {
