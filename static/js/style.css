@@ -6,34 +6,64 @@
 
 html, body {
     margin:0;
-    height:100%;
-  }
+ }
 
 .bg-container {
-    background-image: url("/static/js/eiffel-tower-background.jpg");
-    background-size:cover;
+    background-image: url("/static/js/Brooklyn photo.jpg");
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
     background-repeat:no-repeat;
     background-position:center center;
     z-index:-100;
     margin: 0px;
-  }
+    min-height: 100vh;
+}
 
 .blur {
     background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(1px);
+    backdrop-filter: blur(0px);
     height: 100%;
     width: 100%;
     display: inline-block;
+    min-height: 100vh;
 }
 
 body { font-family: 'Helvetica'; }
 
-h1 { text-align:center; font-family: 'Poppins'; }
-h2, h3, h4 { font-family: 'Poppins'; }
+h1 { 
+    text-align:center; font-family: 'Poppins'; 
+}
+
+h2 { 
+    font-family: 'Poppins'; 
+}
+
+h3 {
+    font-family: 'Poppins';
+    font-size: 14pt;
+    color: #538E65;
+}
 
 .navbar-container { background-color: black; }
 .navbar-brand { font-family: 'Yellowtail'; padding-left: 2em; font-size: 25px;}
 .nav-item { font-family: 'Poppins'; }
+nav .navbar-nav li a {
+    color: #538E65 !important;
+    margin-right: 30px;
+}
+
+a:link {
+    color: #538E65;
+}
+
+a:visited {
+    color: #538E65;
+}
+
+#welcome-header {
+    margin-right: 10px;
+    padding-right: 20px;
+}
 
 .register-login-boxes {
     opacity: 0.8;
@@ -45,18 +75,28 @@ h2, h3, h4 { font-family: 'Poppins'; }
     padding-left:1em;
     padding-bottom:1em;
     width:700px;
-    border-radius: 25px;
+    border-radius: 10px;
+}
+
+#register-column {
+    margin-left: 70px;
+}
+
+#login-column {
+    margin-left: 70px;
 }
 
 #register-header {
     padding-top: 1em;
 }
+
 #login-header {
     padding-top: 1em;
 }
 
 .welcome-back {
-    text-align: center;
+    margin-right: 10px;
+    padding-right: 15px;
 }
 
 .your-itinerary {
@@ -90,7 +130,7 @@ h2, h3, h4 { font-family: 'Poppins'; }
     padding-top:.5em;
     padding-bottom:1em;
     width:700px;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #new-itinerary-box {
@@ -101,7 +141,9 @@ h2, h3, h4 { font-family: 'Poppins'; }
     padding-left:1.5em;
     padding-bottom:.5em;
     width:280px;
-    border-radius: 25px;
+    border-radius: 10px;
+    font-family: 'Poppins';
+    text-align: center;
 }
 
 #view-itinerary-box {
@@ -113,26 +155,29 @@ h2, h3, h4 { font-family: 'Poppins'; }
     padding-bottom:.5em;
     width:280px;
     border-radius: 25px;
+    font-family: 'Poppins';
+    text-align: center;
 }
 
 .create-itinerary-wrapper {
     opacity: 0.8;
-    margin: 30px;
     border: 1px solid black;
     background-color: #ffffff;
     filter: alpha(opacity=50);
-    padding-top:.5em;
-    padding-bottom:1em;
-    width:700px;
-    border-radius: 25px;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 30px;
+    margin-left: 60px;
+    width:45%;
+    height:75%;
 }
 
 #create-new-itinerary {
     margin: 30px;
-    margin-left:10px;
+    margin-left:28px;
     border: 1px solid black;
     background-color:black;
-    padding-top:.5em;
+    padding-top:1.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
     width:600px;
@@ -148,7 +193,7 @@ h2, h3, h4 { font-family: 'Poppins'; }
     padding-top:.5em;
     padding-bottom:1em;
     width:700px;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #itinerary-box {
@@ -171,7 +216,7 @@ h2, h3, h4 { font-family: 'Poppins'; }
     background-color: #ffffff;
     filter: alpha(opacity=50);
     padding: 10px;
-    border-radius: 25px;
+    border-radius: 10px;
     margin: 30px;
     margin-left: 60px;
     width:40%;
@@ -197,7 +242,7 @@ h2, h3, h4 { font-family: 'Poppins'; }
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #display-flight-and-hotel {
@@ -219,7 +264,7 @@ h2, h3, h4 { font-family: 'Poppins'; }
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #add-activities-button {
@@ -230,7 +275,7 @@ h2, h3, h4 { font-family: 'Poppins'; }
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 .to-be-scheduled {
@@ -244,7 +289,7 @@ h2, h3, h4 { font-family: 'Poppins'; }
     filter: alpha(opacity=50);
     padding-top:.5em;
     padding-bottom:1em;
-    border-radius: 25px;
+    border-radius: 10px;
     height: 220px;
     display:flex;
     flex-direction: column;
@@ -271,21 +316,27 @@ h2, h3, h4 { font-family: 'Poppins'; }
     filter: alpha(opacity=50);
     padding-top:.5em;
     padding-bottom:1em;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #map-div {
-    flex: 0 0 auto;
-    width: 45%;
-    height: 50%;
-    padding: 30px;
-    padding-right: 0px;
-    padding-left: 60px;
+    opacity: 0.8;
+    border: 1px solid black;
+    background-color: #ffffff;
+    filter: alpha(opacity=50);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 30px;
+    margin-left: 60px;
+    width:40%;
+    height: 75%;
 }
 
 #city_map { 
-    height:550px;
+    height:500px;
     z-index:10; 
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 #activity-search {
@@ -295,11 +346,58 @@ h2, h3, h4 { font-family: 'Poppins'; }
 
 #city-search {
     width:93%;
-    margin-bottom: 5px;
+    margin-bottom:5px;
+}
+
+#activity-search-results {
+    opacity: 0.8;
+    border: 1px solid black;
+    background-color: #ffffff;
+    filter: alpha(opacity=50);
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+
+#activities-list-container {
+    width: 75%;
+}
+
+.list-group {
+    margin-top: 10px;
+}
+
+#yelp_image {
+    width: 500px;
 }
 
 .form-group {
+    margin-bottom:5px;
+    width:93%;
+}
+
+.form-control {
+    margin-bottom:5px;
+}
+
+.btn {
     margin-bottom: 5px;
+    color: #538E65;
+}
+
+#flight-info {
+    margin-bottom: 5px;
+}
+
+#hotel-info {
+    margin-bottom: 5px;
+}
+
+.sched-date {
+    font-family: 'Poppins';
+    font-size: 14pt;
+    text-decoration: underline;
 }
 
 .photo-attribution {
@@ -307,7 +405,7 @@ h2, h3, h4 { font-family: 'Poppins'; }
     border: 1px solid black;
     background-color: #ffffff;
     filter: alpha(opacity=50);
-    position:absolute;
+    position:fixed;
     display: inline-block;
     padding:3px 3px;
     right:0; 
@@ -316,5 +414,5 @@ h2, h3, h4 { font-family: 'Poppins'; }
     font-family:'Helvetica';
     font-size:10px;
     font-weight: 300;
-    z-index: 10;
+    z-index: 1;
 }

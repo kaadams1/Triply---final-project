@@ -54,14 +54,14 @@
 
     <div class="navbar-container">
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-      <a class="navbar-brand" href="#">Triply</a>
+      <a class="navbar-brand" href="/users/my-profile">Triply</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
             {% if "user_email" in session %}
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="/users/my-profile">Home<span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
@@ -71,7 +71,6 @@
             <a class="nav-link" href="/logout">Logout</a>
           </li>
           {% endif %}
-
         </ul>
       </div>
     </nav>
@@ -114,7 +113,9 @@
             <!-- BACKGROUND IMAGE -->
             <div class="bg-container">
                   <div class="photo-attribution">
-                    Photo by <a href="https://unsplash.com/@thkelley?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Thomas Kelley</a> on <a href="https://unsplash.com/s/photos/travel-city?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+                    <!-- Photo by <a href="https://unsplash.com/@thkelley?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Thomas Kelley</a> on <a href="https://unsplash.com/s/photos/travel-city?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> -->
+                    Photo by <a href="https://unsplash.com/@absweb?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Anthony Berardi</a> on <a href="https://unsplash.com/s/photos/city?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  
                   </div>
                 <div class="blur">
                   {% block body %}

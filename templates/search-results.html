@@ -10,7 +10,7 @@
       <div class="col">
 
         <div id="activity-search-results">
-          <h2>Stuff to do in {{ location.capitalize() }}</h2>
+          <h2 id="stuff-to-do-header">Stuff to do in {{ location.capitalize() }}:</h2>
 
         <div class="col">
         <a href="/display-itinerary/{{trip.itin_id}}" class="lead backlink">
@@ -21,7 +21,7 @@
 
   </div>
 
-  <div class="container">
+  <div class="container" id="activities-list-container">
 
           <ul class="activities-list list-group">
             {% for business in json_response['businesses'] %}
@@ -31,7 +31,7 @@
 
                   <div class="col">
 
-                    <img src="{{ business['image_url'] }}">
+                    <img id="yelp_image" src="{{ business['image_url'] }}">
                   
                   </div>
 

@@ -16,11 +16,12 @@
                 {% for itin in itin_list %}
                 <div class="col-sm-4" id="itinerary-box">
 
-                        {{ itin.itin_name }} <br>
-                        {{ itin.itin_location }} <br>
+                        <h3>{{ itin.itin_name }} </h3>
                         {{ itin.itin_start }} to
                         {{ itin.itin_end }} <br>
-                    <a href="/display-itinerary/{{itin.itin_id}}"> <button class="view-itinerary" id={{itin.itin_name}} >View this trip </button></a>
+                        {{ itin.itin_location }} <br>
+
+                    <a href="/display-itinerary/{{itin.itin_id}}"> <button class="btn btn-outline-secondary btn-sm" name="view-itinerary" id={{itin.itin_name}} >View this trip </button></a>
 
                 </div> 
                 {% endfor %}

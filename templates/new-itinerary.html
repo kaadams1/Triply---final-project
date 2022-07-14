@@ -16,30 +16,30 @@
     <form action="/new-itinerary" id="new-itinerary-form" method="POST">
 
         <div class="form-group" name="itin_name">
-            <label>Name your upcoming trip: </label>
-            <input type="text" name="itin_name" id="itin_name" value="">
+            <!-- <label>Name your upcoming trip: </label> -->
+            <input type="text" name="itin_name" id="itin_name" value="" class="form-control" placeholder="Name your upcoming trip!">
         </div>
 
         <div class="auto-search-wrapper" name="itin_location">
-            <label>What city are you visiting? </label>
+            <!-- <label>What city are you visiting? </label> -->
             <input
               type="text"
               autocomplete="on"
               id="city-search"
-              class="full-width"
-              placeholder=""
+              class="form-control"
+              placeholder="What city are you visiting?"
               name="itin_location" value=""
             />
         </div>
 
         <div class="form-group" name="itin_start">
-            <label>When does your trip start? </label>
-            <input type="text" name="itin_start" id="itin_start" value="">
+            <!-- <label>When does your trip start? </label> -->
+            <input type="text" name="itin_start" id="itin_start" value="" class="form-control" placeholder="When does your trip start?">
         </div>
 
         <div class="form-group" name="itin_end">
-            <label>When does your trip end? </label>
-            <input type="text" name="itin_end" id="itin_end" value="">
+            <!-- <label>When does your trip end? </label> -->
+            <input type="text" name="itin_end" id="itin_end" value="" class="form-control" placeholder="When does your trip end?">
         </div>
 
         <div class="form-group" name="hidden">
@@ -69,7 +69,7 @@
 <script>
 
 // minimal configure
-new Autocomplete("search", {
+new Autocomplete("city-search", {
   // default selects the first item in
   // the list of results
   selectFirst: true,
