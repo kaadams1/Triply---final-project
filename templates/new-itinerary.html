@@ -4,48 +4,58 @@
 
 {% block body %}
 
-<h1>Create a new itinerary:</h1>
 
-<p>
-<form action="/new-itinerary" method="POST">
+<div class="row">
+<div class="create-itinerary-wrapper col-6">
 
-    <div class="form-group" name="itin_name">
-        <label>Name your upcoming trip: </label>
-        <input type="text" name="itin_name" id="itin_name" value="">
+  <h1 id="create-itin-header">Create a new itinerary:</h1>
+
+  <div class="container-fluid">
+
+    <div id="create-new-itinerary">
+    <form action="/new-itinerary" id="new-itinerary-form" method="POST">
+
+        <div class="form-group" name="itin_name">
+            <label>Name your upcoming trip: </label>
+            <input type="text" name="itin_name" id="itin_name" value="">
+        </div>
+
+        <div class="auto-search-wrapper" name="itin_location">
+            <label>What city are you visiting? </label>
+            <input
+              type="text"
+              autocomplete="on"
+              id="city-search"
+              class="full-width"
+              placeholder=""
+              name="itin_location" value=""
+            />
+        </div>
+
+        <div class="form-group" name="itin_start">
+            <label>When does your trip start? </label>
+            <input type="text" name="itin_start" id="itin_start" value="">
+        </div>
+
+        <div class="form-group" name="itin_end">
+            <label>When does your trip end? </label>
+            <input type="text" name="itin_end" id="itin_end" value="">
+        </div>
+
+        <div class="form-group" name="hidden">
+            <input type="hidden" id="hidden-lng" name="hidden-lng" value="">
+            <input type="hidden" id="hidden-lat" name="hidden-lat" value="">
+        </div>  
+
+        <div class="form-group">
+            <input class="btn btn-outline-secondary btn-sm" id="create_itin" name="create_itin" type="submit" value="Create itinerary">
+        </div>  
+    </form>
     </div>
+  </div>
+</div>
+</div>
 
-    <div class="auto-search-wrapper" name="itin_location">
-        <label>What city are you visiting? </label>
-        <input
-          type="text"
-          autocomplete="on"
-          id="search"
-          class="full-width"
-          placeholder=""
-          name="itin_location" value=""
-        />
-    </div>
-
-    <div class="form-group" name="itin_start">
-        <label>When does your trip start? </label>
-        <input type="text" name="itin_start" id="itin_start" value="">
-    </div>
-
-    <div class="form-group" name="itin_end">
-        <label>When does your trip end? </label>
-        <input type="text" name="itin_end" id="itin_end" value="">
-    </div>
-
-    <div class="form-group" name="hidden">
-        <input type="hidden" id="hidden-lng" name="hidden-lng" value="">
-        <input type="hidden" id="hidden-lat" name="hidden-lat" value="">
-    </div>  
-
-    <div class="form-group">
-        <input class="btn btn-primary" id="create_itin" name="create_itin" type="submit" value="Create itinerary">
-    </div>  
-</form>
-</p>
 
 <div class="container">
     <div class="row">

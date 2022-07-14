@@ -6,30 +6,28 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="row">
-        <h1>Here's a list of your itineraries:</h1>
+<div class="view-itinerary-list">
+
+    <h1 id="itinerary-list-header">Here's a list of your itineraries:</h1>
+
+    <div class="container-fluid">
+        <div class="row">
+
+                {% for itin in itin_list %}
+                <div class="col-sm-4" id="itinerary-box">
+
+                        {{ itin.itin_name }} <br>
+                        {{ itin.itin_location }} <br>
+                        {{ itin.itin_start }} to
+                        {{ itin.itin_end }} <br>
+                    <a href="/display-itinerary/{{itin.itin_id}}"> <button class="view-itinerary" id={{itin.itin_name}} >View this trip </button></a>
+
+                </div> 
+                {% endfor %}
+                
+        </div>  
+
     </div>
-</div>
-
-
-<div class="container">
-
-    <div class="row">
-
-    {% for itin in itin_list %}
-        <div class="col">
-
-            {{ itin.itin_name }} <br>
-            {{ itin.itin_location }} <br>
-            {{ itin.itin_start }} to
-            {{ itin.itin_end }} <br>
-        <a href="/display-itinerary/{{itin.itin_id}}"> <button class="view-itinerary" id={{itin.itin_name}} >View this trip </button></a>
-
-        </div> 
-    {% endfor %}
-    
-    </div>  
 
 </div>
 

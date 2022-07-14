@@ -175,6 +175,7 @@ def display_itinerary(itin_id):
     """Display a single itinerary from the user's list."""
 
     trip = Itinerary.get_by_id(itin_id)
+    location = request.args.get('search_location')
     destination = Destination.get_by_itin_id(itin_id)
     city_id = destination.city_id
     city = City.get_by_id(city_id)
@@ -200,7 +201,7 @@ def display_itinerary(itin_id):
     for d in itin_dates:
         itin_dates2.append(d.date())
 
-    return render_template("display-itinerary.html", trip=trip, destination=destination, city_id=city_id, city=city, 
+    return render_template("display-itinerary.html", trip=trip, location=location, destination=destination, city_id=city_id, city=city, 
                             unscheduled_activities=unscheduled_activities, unscheduled_activities_dict=unscheduled_activities_dict, 
                             scheduled_activities=scheduled_activities, scheduled_activities_dict=scheduled_activities_dict, itin_dates2=itin_dates2,
                             city_lat=city_lat, city_lng=city_lng, flight_info=flight_info, hotel_info=hotel_info)
@@ -248,14 +249,14 @@ def add_flight_hotel_info():
 
 #ACTIVITIES
 
-@app.route("/search/<itin_id>", methods=["GET"])
-def search_activities(itin_id):
-    """Search activities by city or zip."""
+# @app.route("/search/<itin_id>", methods=["GET"])
+# def search_activities(itin_id):
+#     """Search activities by city or zip."""
 
-    trip = Itinerary.get_by_id(itin_id)
-    location = request.args.get('search_location')
+#     trip = Itinerary.get_by_id(itin_id)
+#     location = request.args.get('search_location')
 
-    return render_template("search.html", trip=trip, location=location)
+#     return redirect('/view-itinerary')
 
 
 @app.route("/search-results/<itin_id>", methods=["GET"])

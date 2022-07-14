@@ -13,8 +13,8 @@
           <h2>Stuff to do in {{ location.capitalize() }}</h2>
 
         <div class="col">
-        <a href="/search/{{trip.itin_id}}" class="lead backlink">
-          Go back to the search form
+        <a href="/display-itinerary/{{trip.itin_id}}" class="lead backlink">
+          Go back to your itinerary
         </a>
       </div>
     </div>
@@ -50,7 +50,7 @@
                             <input type="hidden" id="address" name="address" value="{{ business['location']['address1'] }}">
                             <input type="hidden" id="zipcode" name="zipcode" value="{{ business['location']['zip_code'] }}">
                             <input type="hidden" id="yelp_url" name="yelp_url" value="{{ business['url'] }}">
-                            <button id="add-activity" type="submit"> Add to itinerary</button>
+                            <button class="btn btn-outline-secondary btn-sm" id="add-activity" type="submit"> Add to itinerary</button>
                         </form>
                       </a>
                     </div>

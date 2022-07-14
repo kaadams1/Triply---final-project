@@ -1,12 +1,12 @@
 // alert("Javascript is connected")
 
-editName = document.querySelector('.edit-itin-name');
+editName = document.querySelector('[name="edit-itin-name"]');
 
-editLocation = document.querySelector('.edit-itin-location');
+editLocation = document.querySelector('[name="edit-itin-location"]');
 
-editStart = document.querySelector('.edit-itin-start');
+editStart = document.querySelector('[name="edit-itin-start"]');
 
-editEnd = document.querySelector('.edit-itin-end');
+editEnd = document.querySelector('[name="edit-itin-end"]');
 
 
 
