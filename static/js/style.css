@@ -35,10 +35,12 @@ html, body {
 h1 { 
     text-align:center; 
     font-family: 'Poppins'; 
+    color: whitesmoke;
 }
 
 h2 { 
     font-family: 'Poppins'; 
+    color: whitesmoke;
 }
 
 h3 {
@@ -50,8 +52,8 @@ h3 {
 
 h4 {
     font-family: 'Poppins';
-    color: white;
-    font-size: 15pt;
+    color: #538E65;
+    font-size: 14pt;
     font-weight: bold;
 }
 
@@ -63,6 +65,7 @@ h4 {
     font-family: 'Yellowtail'; 
     padding-left: 2em; 
     font-size: 25px;
+    color: whitesmoke !important;
 }
 
 .nav-item { 
@@ -74,7 +77,7 @@ h4 {
     display: block;
     width: 0px;
     height: 2px;
-    background: #c9c6c7;
+    background: #538E65;
     transition: 0.4s;
 }
 
@@ -83,7 +86,7 @@ h4 {
 }
 
 nav .navbar-nav li a {
-    color: #538E65 !important;
+    color: #c9c6c7 !important;
     margin-right: 30px;
 }
 
@@ -105,10 +108,10 @@ a:hover {
 }
 
 .register-login-boxes {
-    opacity:0.9;
+    opacity:0.8;
     margin: 30px;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding-top:.5em;
     padding-left:1em;
@@ -122,7 +125,7 @@ a:hover {
     margin-top: 0px;
     margin-left: 30px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:0em;
     padding-left:1.0em;
     padding-bottom:.5em;
@@ -135,7 +138,7 @@ a:hover {
     margin-top: 0px;
     margin-left: 30px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top: 0em;
     padding-left:1.0em;
     padding-bottom:.5em;
@@ -181,20 +184,22 @@ a:hover {
 #to-be-scheduled-header {
     text-align: center;
     width:100%;
+    color: whitesmoke;
 }
 
 #scheduled-activities-header {
     text-align: center;
+    color: whitesmoke;
 }
 #create-itin-header {
     text-align: center;
 }
 
 .user-itinerary-boxes {
-    opacity: 0.9;
+    opacity: 0.8;
     margin: 30px;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding-top:.5em;
     padding-bottom:1em;
@@ -205,7 +210,7 @@ a:hover {
 #new-itinerary-box {
     margin: 30px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -218,7 +223,7 @@ a:hover {
 #view-itinerary-box {
     margin: 30px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -229,9 +234,9 @@ a:hover {
 }
 
 .create-itinerary-wrapper {
-    opacity: 0.9;
+    opacity: 0.8;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding: 10px;
     border-radius: 10px;
@@ -245,7 +250,7 @@ a:hover {
     margin: 30px;
     margin-left:28px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:1.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -254,10 +259,10 @@ a:hover {
 }
 
 .view-itinerary-list {
-    opacity: 0.9;
+    opacity: 0.8;
     margin: 30px;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding-top:.5em;
     padding-bottom:1em;
@@ -271,7 +276,7 @@ a:hover {
     margin-right: 30px;
     margin-top: 20px;
     border: 1px solid black;
-    background-color:black;
+    background-color: white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -280,9 +285,9 @@ a:hover {
 }
 
 .display-itinerary {
-    opacity: 0.9;
+    opacity: 0.8;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding: 10px;
     border-radius: 10px;
@@ -296,7 +301,7 @@ a:hover {
     margin-bottom: 10px;
     margin-top: 0px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -313,7 +318,7 @@ a:hover {
     margin-bottom: 10px;
     margin-top: 0px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -324,7 +329,7 @@ a:hover {
     margin-bottom: 0px;
     margin-top: 0px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -335,7 +340,7 @@ a:hover {
     margin-bottom: 0px;
     margin-top: 0px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -346,7 +351,7 @@ a:hover {
     margin-bottom: 0px;
     margin-top: 0px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -357,7 +362,7 @@ a:hover {
     margin-bottom: 10px;
     margin-top: 10px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -365,13 +370,13 @@ a:hover {
 }
 
 .to-be-scheduled {
-    opacity: 0.9;
+    opacity: 0.8;
     margin-top: 0px;
     margin-right: 30px;
     margin-left: 30px;
     margin-bottom: 10px;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding-top:.5em;
     padding-bottom:1em;
@@ -394,11 +399,11 @@ a:hover {
 }
 
 #already-scheduled {
-    opacity: 0.9;
+    opacity: 0.8;
     margin: 30px;
     margin-top: 10px;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding-top:.5em;
     padding-bottom:1em;
@@ -409,7 +414,7 @@ a:hover {
     margin-bottom: 10px;
     margin-top: 10px;
     border: 1px solid black;
-    background-color:black;
+    background-color:white;
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
@@ -417,9 +422,9 @@ a:hover {
 }
 
 #map-div {
-    opacity: 0.9;
+    opacity: 0.8;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding: 10px;
     border-radius: 10px;
@@ -447,7 +452,7 @@ a:hover {
 }
 
 #activity-search-results {
-    opacity: 0.9;
+    opacity: 0.8;
     border: 1px solid black;
     background-color: #ffffff;
     filter: alpha(opacity=50);
