@@ -129,7 +129,7 @@ a:hover {
     padding-top:0em;
     padding-left:1.0em;
     padding-bottom:.5em;
-    border-radius: 25px;
+    border-radius: 10px;
     width: 600px;
 }
 
@@ -142,7 +142,7 @@ a:hover {
     padding-top: 0em;
     padding-left:1.0em;
     padding-bottom:.5em;
-    border-radius: 25px;
+    border-radius: 10px;
     width: 600px;
 }
 
@@ -255,7 +255,7 @@ a:hover {
     padding-left:1.5em;
     padding-bottom:.5em;
     width:600px;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 .view-itinerary-list {
@@ -305,7 +305,7 @@ a:hover {
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #name {
@@ -333,7 +333,7 @@ a:hover {
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #display-flight-and-hotel {
@@ -344,7 +344,7 @@ a:hover {
     padding-top:.5em;
     padding-left:1.5em;
     padding-bottom:.5em;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #add-flight-hotel-info {
