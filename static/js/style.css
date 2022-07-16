@@ -454,7 +454,7 @@ a:hover {
 #activity-search-results {
     opacity: 0.8;
     border: 1px solid black;
-    background-color: #ffffff;
+    background-color: black;
     filter: alpha(opacity=50);
     padding: 10px;
     border-radius: 10px;
